@@ -1,0 +1,142 @@
+<section class="book-add-container">
+  <header>Edit Book</header>
+  @if(errMessage !== null && errMessage !== '' && errMessage !== undefined) {
+    <snackbar [errorText] = "errMessage"/>
+  }
+
+  <form
+    class="book-form"
+    #editBookForm="ngForm"
+    (ngSubmit)="editBook(editBookForm)"
+  >
+    <div class="input-box">
+      <input
+        type="text"
+        name="bookTitle"
+        [(ngModel)]="selectedBook.bookTitle"
+        pattern="^[^\s]+(\s+[^\s]+)*$"
+        required
+        minlength="5"
+        #bookTitle="ngModel"
+      />
+      @if(bookTitle.invalid && (bookTitle.dirty || bookTitle.touched)){
+        <div class="error">
+         @if(bookTitle.errors?.['required']) {<small>*Book title is required.</small>}
+         @if(bookTitle.errors?.['pattern']) {<small>*Invalid format for book title.</small>}
+         @if(bookTitle.errors?.['minlength']) {<small>*Book title must be at least 5 characters long.</small>}
+        </div>
+       }
+    </div>
+
+    <div class="column">
+      <div class="input-box">
+        <input
+          type="text"
+          name="authorName"
+          [(ngModel)]="selectedBook.authorName"
+          pattern="^[^\s]+(\s+[^\s]+)*$"
+          #authorName="ngModel"
+          minlength="5"
+        />
+        @if(authorName.invalid && (authorName.dirty || authorName.touched)){
+          <div class="error">
+           @if(bookTitle.errors?.['required']) {<small>*Author name is required.</small>}
+           @if(authorName.errors?.['pattern']) {<small>*Invalid format for author name.</small>}
+           @if(authorName.errors?.['minlength']) {<small>*Author name must be at least 5 characters long.</small>}
+          </div>
+         }
+      </div>
+      <div class="input-box">
+        <input
+          type="text"
+          name="category"
+          [(ngModel)]="selectedBook.category"
+          pattern="^[^\s]+(\s+[^\s]+)*$"
+          minlength="4"
+          #category="ngModel"
+        />
+        @if(category.invalid && (category.dirty || category.touched)){
+          <div class="error">
+           @if(category.errors?.['required']) {<small>*Category is required.</small>}
+           @if(category.errors?.['pattern']) {<small>*Invalid format for category.</small>}
+           @if(category.errors?.['minlength']) {<small>*Category must be at least 4 characters long.</small>}
+          </div>
+         }
+      </div>
+    </div>
+
+    <div class="input-box">
+      <input
+        type="text"
+        name="imageURL"
+        [(ngModel)]="selectedBook.imageURL"
+        #imageURL="ngModel"
+        pattern="https:\/\/"
+      />
+      @if(imageURL.invalid && (imageURL.dirty || imageURL.touched)){
+        <div class="error">
+         @if(imageURL.errors?.['required']) {<small>*image URL is required.</small>}
+         @if(imageURL.errors?.['pattern']) {<small>*Invalid format for URL.</small>}
+        </div>
+       }
+    </div>
+
+    <div class="column">
+      <div class="input-box">
+        <input
+          type="number"
+          name="ageFrom"
+          [(ngModel)]="selectedBook.ageFrom"
+          required
+          min="0"
+          max="17"
+          #ageFrom="ngModel"
+        />
+        @if(ageFrom.invalid && (ageFrom.dirty || ageFrom.touched)){
+          <div class="error">
+           @if(ageFrom.errors?.['required']) {<small>*Age From is required.</small>}
+           @if(ageFrom.errors?.['max'] || ageFrom.errors?.['min']) {<small>*Age must between 0 and 17.</small>}
+          </div>
+         }
+      </div>
+      <div class="input-box">
+        <input
+          type="number"
+          name="ageTo"
+          [(ngModel)]="selectedBook.ageTo"
+          required
+          min="1"
+          max="18"
+          #ageTo="ngModel"
+        />
+        @if(ageTo.invalid && (ageTo.dirty || ageTo.touched)){
+          <div class="error">
+           @if(ageTo.errors?.['required']) {<small>*Age To is required.</small>}
+           @if(ageTo.errors?.['max'] || ageTo.errors?.['min']) {<small>*Age must between 1 and 18.</small>}
+          </div>
+         }
+      </div>
+    </div>
+
+    <div class="input-box">
+      <input
+        type="text"
+        name="description"
+        [(ngModel)]="selectedBook.description"
+        required
+        minlength="20"
+        pattern="^[^\s]+(\s+[^\s]+)*$"
+        #description="ngModel"
+        />
+        @if(description.invalid && (description.dirty || description.touched)){
+          <div class="error">
+           @if(description.errors?.['required']) {<small>*Description is required.</small>}
+           @if(description.errors?.['pattern']) {<small>*Invalid format for description.</small>}
+           @if(description.errors?.['minlength']) {<small>*Description must be at least 20 characters long.</small>}
+          </div>
+         }
+    </div>
+
+    <button type="submit" value="Submit" class="submit-btn" [disabled]="!editBookForm.valid">Edit Book</button>
+  </form>
+</section>

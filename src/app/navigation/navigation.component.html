@@ -1,0 +1,49 @@
+<div class="navigation">
+  <div class="logo">
+    <a routerLink="home" class="logo-btn">My Little Library</a>
+  </div>
+  <div class="header-nav">
+    <div class="top-nav">
+      <div class="top-nav-items">
+        <div
+          class="item"
+          routerLink="my-books"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fa-solid fa-book"></i>
+          <a>My Books</a>
+        </div>
+        <div
+          class="item"
+          routerLink="add-book"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fa-solid fa-plus"></i>
+          <a>Add Book</a>
+        </div>
+        <div
+          class="item"
+          routerLink="logout"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <a>Logout</a>
+        </div>
+
+        <div
+          class="item"
+          class="item"
+          routerLink="auth"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <a>Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

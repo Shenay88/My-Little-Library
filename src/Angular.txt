@@ -1,0 +1,439 @@
+1. Angular is a JS Framework which allow us to create SPA. It is one of the most popular framework for building client side applications. It provides a lot of reusable code like predefined method, classes, interfaces etc, which we can use  to create dynamic vlient-side applications.
+
+2. Framework - it is like a platform for developing software applications. A framework can have pre-defined classes and functions that can be re-used to add several functionalities, which otherwise we would have to write from scratch by our own - for example HTTP requests.
+
+3. Single Page Application - is a web application, which has only one HTML page. When we navigate around, only the content of that HTML page changes. The page itself never changes.
+
+4. Advantage of SPA - Since we are using JS to change the content of the page, it is much faster. Here we are not reaching out the server to request a new piece of HTML data, every time we navigate to a different URL. This allows us to create and application which is fast and reactive.
+
+5. Why Angular ? 
+     - Limitations of JS / jQuery - Vanilla JS or jQuery code becomes hard to maintain and we will need a way to properly structure our application. It is hard to test. There are some functionalities which we will have to write from scratch when usin JS/jQuery. 
+
+6. Advantage of using Angular 
+    - Angular gives our applications a clean and loosely coupled structure that is easy to understand and maintain. 
+    - It brings a lot of utility code which can be re-used in lot of applications. Especially, when dealing with user navigation and browser history.
+    - Applications built with Angular are more testable.
+
+7. Node.js - it is a runtime environment for executing JS code outside of the browser environment. We don't work with node.js, but it is provide some tools that we need in order to build Angular projects for example some packages from npm and in order to do that we need to install node.js on our local development local machine.
+
+8. Angular CLI is a command line interface which we use to create new Angular project or generate some boilerplate code as well as create deployable packages. Angular CLI saves the compile Angular application in the memory and directly starts it. If we make any changes to our Angular App, Angular CLI will recompile and update the file.
+
+9. Bootstrapping is the process of initializing or loading the Angular application.
+
+10. TypeScript is a free and open-source programming language developed by Microsoft.   
+    - it is a superset of JS - any valid JS code is a valid TypeScript code
+    - TS has additional features which do not exist in current version of JS Supported by most browsers.
+    - TS is strongly typed. But JS is dynamically typed.
+    - TS has some object-oriented features that we do not have in JS yet.
+    - With TS we can catch errors at compile time.
+
+11. Component
+    - it is a piece of user interface
+    Every Angular applications has at least one Component
+    - An Angular application is essentially a tree of component.
+    - Combining all these components together makes an Angular UI
+
+12. Selectors - mostly used as HTML tag - example: selector: 'bottom-nav'/selector: 'app-bottom-nav', but we can use them also as:
+    - attribute - selector: [bottom-nav] - Example in app.component.html -> <div bottom-nav></div>
+    - CSS class - selector: ".bottom-nav" - Example in app.component.html -> <div class="bottom-nav"></div>
+    - CSS id -  selector: "#bottom-nav" - Example in app.component.html -> <div id="bottom-nav"></div>
+    !!! BUT we use selector as an attribute mainly in case of angular directives.
+
+13. What is UI logic? - UI logic is how the content is been showing on the screen,(build method), business logic is you provide input to the code returning the output you require. (Methods/classes etc.).
+
+14. Two important parts of a component in Angular is the component class and its corresponding view template. The component class contains the UI logic and the view template contains the HTML which gets rendered in the browser and the communication between this component class and the vie template is called as data binding. In most simple terms the flow of data from component class to view template or from view template to component class is called data biding. 
+
+15. Data Binding - allows us to communicate between a compponent class and its corresponding view (view template) and vice-versa(обратно).
+
+16. Two types of Data Binding 
+    - One Way Data Binding - when data can be access from component into its corresponding view or vice versa.
+        -> from component to its view template
+            --> String interpolation: {{data}}
+            --> Property Binding - [property] = data
+        -> from view template to component class    
+            --> Event binding: (data)="expression"
+    - Two Way Data Binding - binds data from component class to view template and view template to component class. It is a combination of property binding and event binding.
+        -> Data flows in both directions at the same time
+            --> [NgModel]
+
+17. String interpolation {{}} - is used to display a piece of data in HTML, such as displaying a title or a name. In {{}} we also can call a function. Example: {{ someFunc()}} - return us the result of the function. Also methosds like toFixed(). Example: {{ someFunc().toFixed(2)}}. Another way -> ternary operator. Example: {{ something > 0 ? do this : do that}}
+
+18. Property binding []="" - lets us bind a property of a DOM object, for example the hidden property, to some data value. This can let us show or hide a DOM element, or manipulate the DOM in some other way. We use it fot HTML attributes like disabled, hidden, checked. Instead of [] we can use bind. For example: bind-disabled ([disabled]), bind-value([value]).
+
+19. Attribute binding - we need to add "attr". Example: [attr.aria-hidden]
+
+20. Difference between an HTML attribute and an HTML property - the HTML attribute represents the initial value and it does not change but a property represents the current value and it can change.
+    -   accessibility attributes - aria-label, aria-hidden, aria-expanded, aria-control
+    - data attributes - data-id, data-name, data-value, colspan
+
+21. Event binding - we have to wrap that event name within parenthesis - examples: (input), (click), etc. and inside "" we can write any typescript expression. Whenever an event occurse an event object gets generated. Example (input) -> whenever we type something inside this text box and input event will happen and it will emit an input event object and we will have access to that object using $event variable. Example (event)="someFunc($event)" -> this variable will contain the event object that has happened ot the target element. Don't forget to declarate in componentName.components.ts - example -> someFunc(event: typeName). This event storing inputEvent object. We are interested in target property (in this example will be target: input). In the target object we are interested in value property. Using tge value property we can get the value which the user has entered inside the text box. In input in the html we need to use [ngModel]. To use ngModel. we need to first import the FormsModule. Once the FomrsModule is imported, we can use the NgModel directive in our template to establish two-way binding.
+
+22. Third party libraries we are register in imports and components or a directive of ourn own in declarations.
+
+23. Directives - a directive is an instructions to the DOM. In simple words:
+    - we use directives to manipulate the DOM.
+    - using directives we tell angular how to DOM element should behave or look like.
+    - which term element to add to the web page and which one to not add.
+We can change the DOM elements apperance, behavior or layout using directives. They simply help us to extend HTML in some way.
+
+23. Directives can be classified into three types:
+     - component directive - it is the angular component. It is a directive with a template. Template components are also a kind of instruction to the DOM. Wherever we use a component there we instruct Angular to render the view template of that component. Components are also directives but it is a directive with a template. 
+     Other types of directives d onot have a template. 
+     - Attribute directive - it is used to change the appearance or behavior of a DOM element. It is without template, it does not render anything on the web page neither it removes. We also have built-in attribute directives line NgStyle and ngClass which we can use to change the appearance of a webpage element. The attribute directives can also be applied conditionally.
+     - Structural Directives - it is used to add or remove a DOM element on the Webpage. Basically manipulates the DOM by adding or removing DOM elemenets from the web page - ngIf, ngFor, ngSwitch.
+
+     <div changeToGreen> Some Content </div>  
+
+     @Directive ({
+        selector:'[changeToGreen]'
+     })
+
+     export class changeToGreen{}
+
+24. ngFor directive - iterates over a collection of data like an array. list, etc. and creates an HTML element for each of the items from an HTML template.
+    - The ngFor directive is used to repeat a portion of HTML template once per each item for an itterable list.
+    - It is a structural directive. In manipulates DOM by adding/ removing elements from the DOM.
+
+25. ngIf directive - it is a structural directive that is used to completely add or remove a DOM element from the webpage based on a given condition.
+
+26. ngStyle directive - it is an attribute directive which allows us to set many inline style of an HTML element using expression. The ngStyle directive is used to set a CSS style dynamically on an HTML element based on a given TypeScript expression. It changes the look or behavior of an HTML element. It does not remove or add anything from the DOM.
+
+27. ngClass Directive - it is an Attribute Directive, which allows us to add or remove CSS classes to or from an HTML element dynamically, based on some TypeScrip expression. It changes the look or behavior of an HTML element. It does not remove or add anything from the DOM.
+
+28. False, '', null, undefined and 0 are falsy values, everything else is a truthy value.
+
+29. Component <---------> View Template - communicate by using Data Binding
+    Component Parent ---------> Component Child - pass data from parent to the child by using custom property binding (@Input decorator).
+    - in the child component we create a property and decorate it with @Input.
+    - Then we use this property like an attribute in the parent component on the component selector. Whereever we will use this selector as an HTML tag there we can use the property like an attribute.
+        [property-attributeName] - we use [] because we want to bind some data. This is also called custom binding.
+    - Then we assign the value to the attribute
+
+30. Child Component ------> Parent Component - we use Custom event binding and @Output() Decorator. We need to use new EventEmitter<type>() and emit. When we are creating an instance of event emitter class we also need to specify what type of data that event is going to emit.
+
+        - creating emit
+            funcName: EventEmitter<type> = new EventEmitter<type>
+
+31. Non-Related Component Communication - we can pass data from ChildA component to the parent component with Custom event binding and @Output Decorator; then to pass the data with Custo Property Binding and @Input Decorator to the ChildB Component.
+
+32. Template reference variable - #valueName - it is a variable which stores a reference to a DOM elemenet, Component or Directive on which it is used.
+
+33. ViewChild decorator - it is used to query and get a reference of the DOM element in the component. It returns the first matching element.
+
+34. ViewChildren decorator - it is usedto get a reference to the list of DOM element from the view template in the component class. It returns all the matching element.
+
+35. ElementRef - a class that wraps native DOM elements in the browser and allows you to work with the DOM by providing the nativeElement object which exposes all the methods and properties of the native elements.
+
+36. ng-template - it is an Angular element which wraps an HTML snippet. The HTML snippet acts and can be used like a template and can be rendered in the DOM. Ng-template does not render itself on the DOM because using this ng-template we are only defining a template. We have to tell Angular where and when to display this template. We can do this in two ways:
+    - ngTemplateOutlet directive - it is a structural directive
+
+37. ng-container - it is a special Angular element that can hold structural directives without adding new element to the DOM. The main use case of ng-container is to use it when we want to use multiple structural directives. We cannot use multiple structural directives ot the same HTML element so allows us to use structural directives without any extra element making sure that the only DOM changes being applied are those dictated by the directives themselves.
+
+38. ng-content - is used when we want to insert the content dynamically inside the component that helps to increase component reusability. Using ng-content we can pass content inside the component selector and when angular parses that content that appears at the place of ng-content. We used it when we want to specify some content and we want to render it in web page. We need to use CSS clas name as the selector
+
+    <app-header>
+        <p class="title">Specific Content here</p>
+    </app-header>
+
+In the Component that we will use it 
+
+    <ng-content select=".title"></ng-content>
+
+
+39. @ContentChild decorator - it is used to access a reference of a DOM element or a component or directive from the projected content into child component class. 
+
+40. @ContentChildren decorator - it is used to access a reference of all the DOM elements, components or directives from the projected content in the child component class based on a given selector.
+
+41. When a constructor is called, by that time, none of its input properties are updated and available to use. When a constructor is called, by that time. the child components of that component are not yet constructed.
+Projected contents are also not available by the time constructor of a component is called.
+
+42. The life cycle of a component begins when the component class is instantiated by calling the Constructor of that component class. Constructor is neither a life cycle hook not it is specific to angular. It is a JS feature.
+
+43. Once the component is removed from the DOM, we can say component is destroyed.
+
+44. Angular Lifecycle - once a view component class is instantiated and before the component is destroyed it goes through different phases in this creation process. When the Angular application starts, it first creates and renders the root component. Then it creates and renders its children and their children. In this way, it forms a tree of components. Once Angular loads the component , it starts the process of rendering view. To do that, it needs to check the input properties, evulate the data binding and expressions, render the projected content etc. Angular then also removes the component from the DOM when its is no longer needed. And Angular lets us know when these events happen, using Angular lifecycle hooks.
+
+45. The Angular Life Cycle Hooks are the methods that angular invokes on a directive or a component, as it creates, changes and destroy them.
+    Order of lifecycles:
+        - ngOnChanges;
+        - ngOnInit;
+        - ngDoCheck;
+        - ngAfterContentInit;
+        - ngAfterContentChecked;
+        - ngAfterViewInit;
+        - ngAfterViewChecked;
+        - ngOnDestroy.
+
+46. Change Detection Cycle in Angular is a mechanism by which Angular keeps the view template in sync with the component class.
+
+47. How does Angular know when something has changed? - Angular runs Change detection cycle on every event that happens on the DOM and in also some other special scenarios which may result into a DOM change.
+    EXAMPLES:
+    - Whenewer the @Input property of a component changes.
+    - Whenever a DOM event happens. E.g Click or Change
+    -Whenever a timer events happens using setTimer() / setInterval().
+    - Whenever an HTTP request is made.
+
+48. The ngOnChanges hook is executed at the start, when a new component is created and its input bound properties are updated. The ngOnChanges hook also gets executes everytime the input bound properties of the component changes. It is not raised if the change detection cycle does not find any changes in the input propertie's value.
+
+49. An array is of reference type and when properties store a reference. When we add a new element in the array, the array is changed, but its reference has not changed. And since the reference has not changed the ngOnChanges lifecycle hook has not been called.
+
+50. Angular raises ngOnInit hook after it creates the component and update its input properties. This hook is raised after ngOnChanges. This hook  is fired only once i.e during the first change detection cycle. After that, if the input property changes, this hook does not get called. By the time ngOnInit gets called, none of the child components or projected contents ot view are available at this point. That's why any property decorated with @ViewChild, @ViewChildren, @ContentChild, @ContentChildren will not be available to use.
+
+51. Angular invokes ngDoCheck hook during every change detection cycle. This hook is incoked even if there is no change in input bound properties.
+For example: The ngDoCheck lifecycle hook will run if you clicked a button on webpage, which does not do anything. But still its an event so the change detection cycle will run and execute ngDoCheck hook. Angular invokes ngDoCheck lifecycle hook after ngOnChanges and ngOnInit hooks. you can use this hook to implement a custom change detection, whenever angular fails to detect any change made to input bound properties. 
+
+52. The ngAfterContentInit lifecycle hook is called after the components projected content has beed fully initialized and it is injected into components view. Angular updates the propertie decorated with @
+ContentChild and @ContentChildren decorator just before this hook is raised. This lifecycle hook gets called only once, during the first change detection cycle. After that, if the projectedcontent changes, this lifecycle hook will not get called.
+
+53. Any lifecycle hook which ends with init is going to be called only once and it will be called only during the first change detection cycle. After that if something changes the lifecycle hook ending with init is not going to be called again.
+
+54. The ngAfterContentChecked lifecycle hook is called during every change detection cycle, after Angular has finished initializing and cheking projected content. It wil be called for every change detection cycle just like ngDoCheck but the difference between them is that ngAfterContentChecked hook will be called only after the projected content has been initialized checked or updated (for example every click on the button even if we don't change something). Angular also updates the properties decorated with @ContentChild and @ContentChildren decorators, before rasing ngAfterContentChecked hook. Angular raises this hook even if there is no projected content in the component.
+The ngAfterContentInit hook is called after the projected content is initialized. ngAfterContentChecked is called whenever the projected content is initialized, checked and updated.
+NOTE: The ngAfterContentInit and ngAfterContentChecked are component only hook. These hooks are not available for directive.
+
+55. The ngAfterViewInit is called after the components View template and all its child components view templates are fully initialized. Angular also updates the properties decorated with @ViewChild and @ViewChildren decorators before raising this hook. This hook is called during the first change detection cycle when Angulat initializes the view for the first time. By the time this gook gets called for a component, all the lifecycle hook methods of child components and directives are completely processed and child components are completely ready. The ngAfterViewInit is also component only hook. This hook is not available for directive. 
+
+56. Angular fires ngAfterViewChecked hook after it checks and updates the components View template and all its child components view templates. This hook is called during the first change detection cycle, after ngAfterViewInit hook has executed. And after that during every change detection cycle. Angular also updates the properties decorated with @ViewChild and @ViewChildren decorator before raising this hook. The ngAfterViewChecked is a component only hook. This hook is not available for directive. 
+
+57. Angular fires ngOnDestroy lifecycle hook just before the component or the directive is destroyed i.e removed from the DOM. This hook is a great place to do some cleanup work like unsubscribe from an observable or detach event handler etc., as this hook is called right before the component is destroyed. This ngOnDestroy is the last lifecycle hook of a component and a directive.
+
+58. When we use nativeElement property it give us a direct access to the DOM and this is not advisable / correct to access the DOM objects directly and manipulate it and the reasons for that are:
+    - Angular keeps the component and view in sync using templates, data banding and change detection etc. All of them are bypassed when we update the DOM directly.
+    - The DOM manipulation works only in browsers. You will not be able to use your app in other platforms like web workers, servers for server-side renderenig, desktop or mobile apps etc. where the is no browser.
+    - The DOM API's does not sanitize the data. Hence it is possible to inject a script, thereby, opening our app and easy target for the XSS injection attacks.
+
+59. Renderer2 - allows us to manipulate the DOM without accessing the DOM elements directly, by providing a layer of abstraction between the DOM element and component code. With Renderer2 we can create an element, add text, append child etc. We can also add or remove Styles HTML attributes, CSS classes and properties etc.
+
+60. The @HostListener decorator listens to a DOM event on the host element and it reacts to that event by executing an event handler method.
+
+61. The @HostBinding decorator binds a host elements property to e property of a directive or a component class. We don't use Renderer2 which means we directly manipulate the DOM.
+
+62. View Encapsulation - it is a concept or behavior in Angular, where component CSS styles are encapsuleted into the components view and do not effect the rest of the application.
+There are three types of View encapsulation in Angular:
+    - ViewEncapsulation.None - no capsulation, it is shared between all css files..
+    - ViewEncapsulation.Emulated - every CSS component has unique code.
+    - ViewEncapsulation.ShadowDOM - creates its own DOM. The Browser keeps the shadow DOM seperate from the main DOM and the rendering of the shadow DOM and the main DOM happened separately.
+
+63. Services - a service in Angular is a reusable TypeScript class that can be used in multiple components across out Angular application. 
+    - We can use services to communicate between two non-related components in Angular.
+    - Services allows us to re-use a piece of code in multiple components, wherever it is required. In this way we avoid repeating a piece of code.
+    - It aalows us to seperate business logic from UI logic. We write UI logic in component class and business logic in a service class. In this way it provides separation of cencern. 
+    - We can unit test the business logic written in a service class separately without creating a component. Testing and debugging is easier with services.
+
+64. A dependency is a relationship between two software components where one component relies on the other component to work properly.
+
+65. Dependency Injection (DI) is a tecnique (design pattern) using which a class receives its dependencies from an external source rather than creating them itself.
+
+66. Disadvantage of not using Dependency Injection (DI):
+    - Without DI, a class is tightly coupled with its dependency. This makes a class non-flexible. Any change in dependency forces us to change the slass implementation. 
+    - It makes testing of class difficult. Because if the dependency changes, the class has to change. And when the class shanges, the unit test mock code also has to change.
+
+67. Advantage of using DI:
+    - DI keeps the code flexible, testable and mutable;
+    - Classes can inherit external logic without knowing how to create it;
+    - Dependency injection benefits components, directives and pipes.
+
+68. When we provide a service on multiple components each component get its own instance of that service.
+
+69. Hierarchical Injection - when we provide a dependency on a component, the samo instance of that dependency is injected in component class and all its child components and their child components. 
+
+70. Dependency Override - when we provide a dependency on a component and we also provide a dependecy on its child component, child component dependency instance will override its parent component dependency instance.
+
+71. Dependency injection on Root Component - when we provide a dependency on root component same instance of that dependency is injected to all components, directives and services.
+
+72. Module Injector - we can also inject a service from Module class. In that case same instance of the dependency will be availavle throughout the Angular application. In this way we implement singleton pattern where a single instance is shared throughout the application.
+
+73. The @Injectable() decorator specifies that Angular can use this class in the DI system. The metadata, providedIn: 'root', means that the ServiceName is visible throughout the application. To inject a service as a dependency into a component, you can use component's constructor() and supply a constructor argument with the dependency type.
+
+74. providers: [ServiceName1, ServiceName2] - sugar syntax. 
+providers: [{provide: ServiceName1, useClass: ServiceName1}, {provide: ServiceName2, useClass: ServiceName2}]
+Provide - stores a unique identifier, a token.
+useClass - we are specifying which class needs to be instantiated for that token.
+
+75. An Observable is a wrapper around asychronous data. We use an observable to handle asynchronous data. An Observable is a function that converts the ordinary data stream into an observable one. You can think of Observable as a wrapper around the ordinary data stream.
+
+76. Data Stream - Streaming involves breaking a resource that you want to receive over a network down into small chunks, then processing it bit by bit. Sendinf the data in chunks instead of sendin the data all at once in a big chunk.
+
+77. Promise vs Observable
+    - A promise cannot handle stream of asynchronous data. It always returns a single value. On the other hand, we can use observables to handle stream of asynchronous data. It can return multiple values.
+    - A promise will certainly return a data even if no code is using that data. Whereas an observable will return a data only if someone is going to use that data.
+    - A promise is native to JS program. Whereas observable is not native to JS and it is ptovided by "RxJS" library.
+
+78. Observable pattern
+
+ Observable ----------------> Observer ----------------> handler
+Event Emmiter         Event Listener Subscriber       Event Handler
+
+ - Next                     - Subscribe()               - Next()
+ - Error                                                - Error()
+ - Completion                                           - Complete()
+
+Observable will emit an event whenever something happens and the subscriber will listen for that event, and when event happens the subscriber can handle that event by executing some functions.
+
+79. RxJS - Reactive Extension library for JS - allows us to work with async data streams. It provides us with a lot of methods which we can use to work with observables and manipulate the data which the observable is going to emit.
+
+80. RxJS of() - the "of" operator creates an observable from the arguments that wee pass into it. You can pass any number of arguments to of operator. Each argument is emmited separately one after the other. It send the complete signal at the end. It does not stream the array elements one after one. Stream them in one line.
+
+81. RxJS from() - The from operator takes a single argument which can be iterated over and convers it into an observable. It stream the array elements one after one.
+
+82. The map operator is used to transform data emitted by a source observable in some way.
+
+83. The filter operator is used to filter data emmited by a source observable based on a give condition.
+
+84. A subject is a special type of observable that allows values to be multicasted to many observers. Subjects are like EventEmitters. The main purpose of using a subject is to make cross component communication. 
+
+multicast - In computer networking, multicast is group communication where data transmission is addressed to a group of destination computers simultaneously.
+
+85. A subject is multicast. On the other hand, an Observable is unicast.
+
+86. Behaviour Subject - it is a subject which can hold an initial value which emits if no new value is emitted. A BehaviourSubject emits an initial value or last emitted value for a new subscriber.
+
+87. Replay Subject - it replays old values to new subscribers when they first subscribe. The ReplaySubject will store every value it emits in a buffer. It will emit them to the new subscribers in the order it received them. You can configure the buffer using the arguments bufferSize and windowTime.
+ - bufferSize: Number of items that ReplaySubject will keep in its buffer. Default - infinity.
+ - windowTime - The amount of time to keep the value in the buffer. Default - infinity.
+
+ 88. Async Subject - only passes the last emitted value to all its subscribers once the complete method is called on it.
+
+ 89. Promise vs Observable
+ 
+    - A Promise is native to JS. An Observable is not native to JS. It is provided by a third party library called RxJS.
+
+    - Promise is eager. It returns the data as soon as a promise is created. Observable is laazy. It only emits the data if there is a subscriber for that observable.
+
+    - Promise can emit only a single value. Observables can emit single or multiple values.
+
+    - Promise has method for success and error. Observable has methods for success, error and completion.
+
+    - Promise always returns asynchronous data. An Observable can return both synchronous and asynchronous data based on how it is impleemented.
+
+90. Routing allows us to navigate from one part of our application to another part. In Angular, using routing, we can move from view of one component to view of another component. 
+
+91. The RouterLink is a directive that binds the HTML element to a Route. When the HTML element on which we have used the RouterLink is clicked, it will result in navigation to that Route. RouterLink directive is an  attribute directive and we can also pass additional parameters to it.
+
+92. The RouterLinkActive is a directive for adding or removing classes from an HTML element that is bound to RouterLink. Using RouterLinkActive directive, we can toggle CSS classes for active route link based on the current router state. The main use case of RouterLinkActive directive is to highlight which route is currently active.
+
+93. RouterLinkActiveOptions directive - when a child route is active, then all the parent routes are also marked as active. In that case, routerLinkActive directive is applied to the active child route and all its parent routes. Using RouterLinkActiveOptions directive we can set some options for routerLinkActive directive. One of the options we can set is the exact property which tells how to match the route path for styling the active route.
+
+[RouterLinkActiveOptions]="{exact:true}"
+
+94. Absolute path - when we use a slash("/") before the router link path, in that case it uses absolute path and the path is directly appended to root url.
+
+95. Relative path - when we don't use a slash(/) before the router link path; in that case it uses relative path and the path is appended to the currently active route. 
+
+96. navigate() method - we can navigate from one route to another programmatically. The navigate method takes an array as an argument and in that array we can specify route segments.
+
+97. navigateByUrl() method - we can navigate from one route to another programmatically. The navigateByUrl method takes a string value as an argument and that string value should contain all the route segments.
+Example: this._router.navigateByUrl('Books/Author/1').
+
+98. Relative path 
+    -when we use (./) before the router link path, it uses relative path and the path is appended to the currently active route
+
+Current Active Route Link Path: localhost:4200/Books/Author
+<a RouterLink="./AuthorName"> AuthorName </a>
+URL: localhost:4200/Books/Author/AuthorName
+
+    - when we use (../) before the router link path, in that case it will move one level up and the path will be appended to the parent path
+
+Current Active Route Link Path: localhost:4200/Books/Author
+<a RouterLink="../AuthorName"> AuthorName </a>
+URL: localhost:4200/Books/AuthorName
+
+    - when we use (../../) before the router link path, in that case it will move two level up and the path will be appended after remove last two paths from the URL
+
+Current Active Route Link Path: localhost:4200/Books/Author
+<a RouterLink="../../AuthorName"> AuthorName </a> 
+URL: localhost:4200/AuthorName
+
+99. Route Parameter - the route parameters are the dynamic part of the route whose value can change. These parameters provides a way to pass extra information to a given route. We use (:). Example: 
+localhost:4200/Books/:id
+localhost:4200/Books/:author
+
+100. Snapshot property - it contain the current value of the route. If the value of the route parameter changes after we have retrieved the value of route, that change will not get captured.
+
+    this.activeRoute.snapshot.paramMap.get('id)
+
+101. The paramMap Observable - by subcsribing to the paramMAp observable(or to params observable), you will get a notification when the value changes. Hence, you can retrieve the latest value of the parameter and update the component accordingly.
+
+102. What is Query String - query string are the optional data that we can pass to a component throuh a route. These query string are added at the end of the route after a "?".
+
+localhost:4200/books/Author?name=nora-roberts
+
+103. Route Parameter vs Query String
+Route parameters are required and it is used by Angular router to determine the route. Route Parameters are part of route definition. 
+Query strings are optional data which we pass through route. If the query parameter is missing in the URL, then it will not stop angular from navigating to the route.
+
+104. A fragmet in a route is a link wich jumps to a section or a content in the HTML page, which contains the ID mentioned in the fragment. A fragment comes after a # sign.
+
+localhost:4200/home#services
+
+105. Angular route guards can be used to control whether the user can navigate to or away from a route based on a given condition. 
+
+106. Why Route Guard? - Allowing the users to navigate to all parts of the application is not a good idea. And we need to restrict the use from accessing certain routes, until the user performs a specific action like login to application. So, you can use route guards for following scenarios.
+
+    - Restrict a use from accessing a route.
+    - Ask user to save changes before moving away from view.
+    - Validating the route parameters before navigating to the route.
+    - Fetch some data before you display component view of a route.
+
+107. Type of Route Guard
+
+    - CanActivate - This guard decides if a route can be accessed by a user or not. This guard is useful in the circumstance where the user is not authorised to navigatae to the target component.
+    - CanActivateChild - This guard decides, if a user can leave a route or not. This guard is useful in case where the user might have some pending changes, which was not saved.
+    - CanDeactivate - this guard determines whether a child route can be activated or not.
+    - Resolve - this guard delays the activation of the route until some tasks are complete. You can use the guard to pre-fetch the data from the backend API, before activating the route.
+    - CanLoad - it prevents the loading of the Lazi Loaded Module. We generelly use this guard whe we don't want to unauthorised user to be able to even see the source code of the module.
+
+108. Pipes in Angular are used to transform or format data before displaying it in the view. Angular pipe takes data as an input and it formats or transform that data before displaying it in the template.
+
+109. How to create a custom pipe?
+
+    - Create a TS class and export it. By concention, a pipe class name should end with Pipe.
+    - Decorate that class with @Pipe Decorator. There we can specify a name for the pipe.
+    - Inherit PipeTransform interface and implements its transform method.
+
+Angular team always recommends not to use pipe to filter or sort data. When we use pipe for filtering or sorting data, it can significantly impact the performance of the application, if not implemented carefully.
+
+110. What is a pure pipe? - A pure pipe is that pipe which gets called whenever there is a pure change on the input value. By default every pipe is a pure pipe.
+
+What is a pure change?
+    - if the pipe is being used on a primitive type like string, number, bolean etc. And if the value of that primitive type changes, it is considered as a pure change.
+    - if the pipe is being used on a reference type input, and if the reference of that input changes, than the change is a pure change.
+    - NOTE: But if the input is of reference type, and only its property value changes and its reference has not changed, that change is not a pure change.
+
+111. What is an impure pipe? - it gets called for each change detection cycle and it is performance intensive.
+
+112. Async pipe - it allows us to handle asynchronous data. It allows us to subscribe to an observable or promise from the view template and returns the value emitted.
+
+113. Dynamic component - a component which we create dynamically at runtime. Dynamic component is not a specific feature provided by Angular. Instead, it is just like a normal component, which gets created on runtime. We create or render dynamic component by writing some code.
+How to render Dynamic component:
+    - Using @if directive - we can assign a TS expression which should return a Boolean value.
+    - Using dynamic component - using this approach we can create and render a component by writing some code, and then we can manually attach it to the DOM
+    Example:
+
+    LoadComponent(data) {
+        // write logig to load component
+    }
+
+114. Why not use normal HTML Form? - When a normal HTML form is submitted, it reloads the page by making an HTTP request to the server. Since we create a SPA using Angular, we can say that it will restart the complete Angular application. To avoid this we need Angular's help to stop this default behavior. This can be achieved using template driven form or reactive form in Agnular. Using any one of these two approaches makes working with forms easier.
+
+    - Template Driven Form
+        Advantage:
+        - less coding is required in the component class.
+        - easy to understand and start with.
+        Disadvantage:
+        - Difficult to add controls dynamically at runtime
+        - unit testing is chalenging with TD Forms.
+    
+    - Reactive Form
+        Advantage:
+        - Structure of the form is defined in TS class
+        - creating dynamic controls is easier
+        - easy to unit test
+        Disadvantage:
+        - most of the things are done by writing code.
+
+115. What is an Interceptor? - The Angular Interceptor helps us to modify the HTTP request by intercepting it before the request is sent to the server. It can also modify the incoming response from the server.
+    - the Interceptor globally catches every outgoing and incoming request at a single place.
+    - we can use it to add custom headers to the outgoing request, log the incoming response,
+ The main use case of using HTTP interceptors is to add authorization header to every request. We can do manually but by using interceptors authorization header will be set for all the requests which we are sending from our application. The another use case is to catch the errors generated by the request ang log them somewhere.
+

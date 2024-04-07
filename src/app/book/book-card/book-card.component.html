@@ -1,0 +1,28 @@
+<div class="book-list">
+    <div class="book">
+      <div class="book-img">
+        <img [src]="book.imageURL" alt="{{ book.bookTitle }}" />
+      </div>
+      <div class="book-info">
+        <div class="title">
+          <p class="title-p"><strong>Title:</strong> {{ book.bookTitle }}</p>
+        </div>
+        <div class="category">
+          <p class="category-p">
+            <strong>Category:</strong> {{ book.category }}
+          </p>
+          <i class="fa-regular fa-heart"></i>
+        </div>
+        <div class="reading-age">
+          <p>
+            <strong>Reading age:</strong> {{ book.ageFrom }} -
+            {{ book.ageTo }} years
+          </p>
+        </div>
+        <div class="detail-btn">
+          <!-- <a class="details-btn" routerLink="/books/book-details/{{book.id}}">Details</a> -->
+          <a class="details-btn" [routerLink]="['/books/book-details/', book.id]" >Details</a>
+        </div>
+      </div>
+    </div>
+  </div>

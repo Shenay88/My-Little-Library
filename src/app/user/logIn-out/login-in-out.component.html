@@ -1,0 +1,39 @@
+<section class="logIn-out">
+  <div class="userForm">
+    @if(isLoading) { <loader /> }
+    @if(errMessage) {
+      <snackbar [errorText]="errMessage" />
+    }
+    <form #userForm="ngForm" (ngSubmit)="onSubmitUser(userForm)">
+      <h2>{{ isLogin ? "Login" : "Sign Up" }}</h2>
+      <div class="input-box">
+        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+        <input type="email" id="email" name="email" ngModel required email/>
+        <label for="email">Email</label>
+      </div>
+      <div class="input-box">
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ngModel
+          required
+          minlength="8"
+        />
+        <label for="password">Password</label>
+      </div>
+      <button class="sub-btn" type="submit" [disabled]="userForm.invalid">
+        {{ isLogin ? "Login" : "Register" }}
+      </button>
+      <div class="link">
+        <p>
+          {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
+          <button class="link-btn" type="button" (click)="onSwitch()">
+            {{ isLogin ? "Register" : "Login" }}
+          </button>
+        </p>
+      </div>
+    </form>
+  </div>
+</section>

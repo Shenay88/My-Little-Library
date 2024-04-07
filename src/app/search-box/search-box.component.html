@@ -1,0 +1,14 @@
+
+
+<!-- ! [ngClass] - property binding -->
+<!-- ! If we use ngClass without [] we cannot apply any CSS style dynamically based on some condition -->
+<!-- ! When we use [] "search-btn" is not a string value anymore; it is treated as a TypeScrip variable and we can write ant typescript expression by using double quotes and curly braces "{}". Then we can specify all the CSS classes which we want to use for that particular HTML element-->
+<!-- ! 'btn': true -> that means this CSS class will apply always on this element button no matter other classes are true or false, but we can write it also like e normal class-->
+
+
+<div class="search-box">
+  <input class="search-box-input" #searchValue/>
+  <button class="search-btn" [routerLink]="'/home'" (click)="onSearch(searchValue.value)">Search</button>
+</div>
+
+ 

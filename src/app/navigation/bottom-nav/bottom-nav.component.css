@@ -1,0 +1,40 @@
+
+.second-nav {
+    display: flex;
+}
+
+.bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1vh 1vh;
+    color: #36454F;
+    font-weight:normal;
+    width:70%;
+    text-align: center;
+}
+
+.bottom-bar-btn {
+    text-decoration: none;   
+    padding: 0 10px; 
+    color: rgba(255, 255, 255, 0.833);
+    font-weight: 600;
+}
+
+
+.second-nav  {
+    background: linear-gradient(336deg, rgba(71, 53, 186, 0.5), rgba(71, 61, 135, 0.7), rgba(58, 44, 152, 0.8));
+    border-radius: 4px;
+} 
+
+
+ /* .bottom-bar-btn:hover {
+    transform: scaleX(1.2);
+    color: black;
+} */
+
+
+.active {
+    transform: scaleX(1.2);
+    color: black;
+}

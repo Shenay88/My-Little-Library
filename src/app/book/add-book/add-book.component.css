@@ -1,0 +1,145 @@
+.book-add-container {
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 20px 50px;
+    border-radius: 8px;
+    margin: 25px auto;
+}
+
+.book-add-container header {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #1f1e1e;
+    font-weight: 500;
+    text-align: center;
+}
+
+.book-add-container .book-form {
+    margin-top: 20px;
+}
+
+.book-form .input-box {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.input-box label {
+    color: #333;
+}
+
+.book-form :where(.input-box input) {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 2.5px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.input-box input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.book-form .column {
+    display: flex;
+    column-gap: 15px;
+}
+
+.book-form .submit-btn {
+    height: 55px;
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #7c6cd6d8;
+}
+
+.book-form .submit-btn:hover {
+    background: #E70044;
+}
+
+.error>small{
+    display: flex;
+    color: #E70044;
+}
+
+/*Responsive*/
+@media screen and (max-width: 500px) {
+    .book-form .column {
+        flex-wrap: wrap;
+    }
+}
+
+.book-form-shadow {
+    box-shadow: rgba(187, 185, 185, 0.35) 0px 5px 15px;
+}
+
+input.ng-invalid.ng-touched {
+    border: red 2px solid !important
+}
+
+small {
+    color: red;
+    font-weight: bold;
+}
+
+/* input.ng-invalid.ng-touched{
+    border: red 2px solid;
+  } */
+
+/* small{
+    color: red;
+    font-weight: bold;
+  } */
+
+
+/* .user-detail-container {
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+  .user-details-container{
+    display: flex;
+  }
+  .user-avatar{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #282C35;
+    font-size: 75px;
+    font-weight: bold;
+    padding: 40px 40px;
+    color: white;
+  }
+  
+  .user-details{
+    padding: 0px 40px;
+  }
+  .user-name{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: #123 2px solid;
+    width: 100%;
+    margin-top: 10px;
+  }
+  span{
+    padding: 5px 5px;
+    font-weight: bold;
+  } */
+

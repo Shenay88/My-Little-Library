@@ -1,0 +1,20 @@
+<div class="books-list-container">
+  @if(loader) {
+  <loader />
+ } 
+ 
+ @if(booksList.length > 0 || errorMessage === null || errorMessage === undefined) { 
+    @for(eachBook of booksList; track eachBook.id) {
+         <book-card [book]="eachBook" />
+    } 
+ }
+
+ @if(booksList.length < 0) {
+	<h1>No Books</h1>
+ }
+
+ 
+ @if(errorMessage) {
+   <snackbar [errorText] = "errorMessage"/>
+ }
+</div>

@@ -1,0 +1,13 @@
+.footer {
+    padding: 5px;
+    background: linear-gradient(336deg, rgba(71, 53, 186, 0.5), rgba(71, 61, 135, 0.7), rgba(58, 44, 152, 0.8));
+    color: white;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

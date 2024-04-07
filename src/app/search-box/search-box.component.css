@@ -1,0 +1,38 @@
+.search-box {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box-input {
+    width: 40%;
+    height: 5.5vh;
+    outline: none;
+    border-radius: 2px;
+    background-color: #efefef;
+    border: #28282B 1px solid;
+}
+
+.search-btn {
+    height: 5.5vh;
+    border-radius: 2px;
+    width: 10%;
+    border: none;
+    background-color: #4f0780e0;
+    color: #fff;
+}
+
+.search-btn:hover {
+    cursor: pointer;
+}
+
+.search-btn-disabled {
+    background-color: #fff;
+    color: #28282B;
+    cursor: not-allowed;
+}
+
+.result {
+    margin: 20px auto;
+    padding: 10px 140px;
+}
