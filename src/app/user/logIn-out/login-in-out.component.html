@@ -1,16 +1,33 @@
 <section class="logIn-out">
   <div class="userForm">
-    @if(isLoading) { <loader /> }
+    @if(isLoading) { <loader /> } 
+    
     @if(errMessage) {
-      <snackbar [errorText]="errMessage" />
+    <snackbar [errorText]="errMessage" />
     }
+    
     <form #userForm="ngForm" (ngSubmit)="onSubmitUser(userForm)">
-      <h2>{{ isLogin ? "Login" : "Sign Up" }}</h2>
+      <h2>{{ isLoginForm ? "Login" : "Sign Up" }}</h2>
       <div class="input-box">
         <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-        <input type="email" id="email" name="email" ngModel required email/>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          required
+          email
+          pattern="^[^\s]+(\s+[^\s]+)*$"
+          #email="ngModel"
+      />
         <label for="email">Email</label>
       </div>
+      @if(email.invalid && (email.dirty || email.touched)){
+        <div class="error-log">
+         @if(email.errors?.['required']) {<small>*Email is required.</small>}
+         @if(email.errors?.['pattern'] || email.errors?.['email']) {<small>*Invalid format for email.</small>}
+        </div>
+       }
       <div class="input-box">
         <span class="icon"><i class="fa-solid fa-lock"></i></span>
         <input
@@ -20,17 +37,25 @@
           ngModel
           required
           minlength="8"
+          pattern="^[^\s]+(\s+[^\s]+)*$"
+          #password = "ngModel"
         />
         <label for="password">Password</label>
       </div>
+      @if(password.invalid && (password.dirty || password.touched)){
+        <div class="error-log">
+         @if(password.errors?.['required']) {<small>*Password is required.</small>}
+         @if(password.errors?.['pattern'] || email.errors?.['email']) {<small>*Password must be at least 8 characters long.</small>}
+        </div>
+       }
       <button class="sub-btn" type="submit" [disabled]="userForm.invalid">
-        {{ isLogin ? "Login" : "Register" }}
+        {{ isLoginForm ? "Login" : "Register" }}
       </button>
       <div class="link">
         <p>
-          {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
+          {{ isLoginForm ? "Don't have an account?" : "Already have an account?" }}
           <button class="link-btn" type="button" (click)="onSwitch()">
-            {{ isLogin ? "Register" : "Login" }}
+            {{ isLoginForm ? "Register" : "Login" }}
           </button>
         </p>
       </div>
