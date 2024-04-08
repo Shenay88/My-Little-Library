@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { Books } from '../../Model/Books';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { UserService } from '../User/user.service';
 
 @Injectable({
@@ -32,11 +31,13 @@ export class BooksService {
   * 1. errorSubject = new Subject<HttpErrorResponse>() - if there some errors we can use errorSubject to emitted this err. We can set subscribers in which component we needed. And these subscriber will receive this err object whenever some HTTP error will occur.
   * 2. errorSubject - milticast observable which means it can emit sama data to miltiple subscribers.
   * 3. We need to specify what type of data we will emit.
-  * 3. We need to use next() if we want to emit the data in this case error.
+  * 4. catchError block you're passing the error downstream to the subscribers of the observable.
+  * 5. throwError(() => err) ensures that the error is propagated downstream to any subscribers of the observable returned by createBook. This allows components or other services subscribing to createBook to handle the error appropriately.
+  * 6. We need to use next() if we want to emit the data in this case error.
 
-
-  * 3. userService: UserService = inject(UserService) - we want to access the userSub subject. It will emit the user object once the user is logged or signed. We want to extract the access token that's why we need to subscribe to this user service in this book service.   
-            
+  ! userService: UserService = inject(UserService) !
+  * 1. userService: UserService = inject(UserService) - we want to access the userSub subject. It will emit the user object once the user is logged or signed. We want to extract the access token that's why we need to subscribe to this user service in this book service.   
+  * 2. Angular knows that we logged in but Firebase doesn't know. We need to tell Firebase that authenticated user is making the request. That's why we need to attach the access token of that user with the request.       
 */
 
   baseUrl: string =
@@ -45,14 +46,16 @@ export class BooksService {
   http: HttpClient = inject(HttpClient);
 
   errorSubject = new Subject<HttpErrorResponse>();
-  // userService: UserService = inject(UserService);
 
   createBook(book: Books): Observable<any> {
     return this.http
       .post<{ name: string }>(`${this.baseUrl}/books.json`, book)
-      .pipe(catchError(err => {
-        return throwError(() => console.log(err))
-      }));
+      .pipe(
+        catchError((err) => {
+          this.errorSubject.next(err.error.message || 'An error occurred')
+          return throwError(() => console.log(err));
+        })
+      );
   }
 
   deleteBook(bookId: string | undefined) {
@@ -77,27 +80,9 @@ export class BooksService {
       );
   }
 
-  // getBookById(bookId: string| undefined) {
-  //  return  this.http.get<Books>(`${this.baseUrl}/books/${bookId}.json`).pipe(map((response) => {
-  //     let book = {}
-  //     book = {...response, id: bookId}
-  //     return book;
-  //   }))
-  // }
-
   getBookById(bookId: string) {
     return this.http.get<Books>(`${this.baseUrl}/books/${bookId}.json`);
   }
-
-  // updateBook(bookId: string | undefined, book: Books) {
-  //   return this.http
-  //     .put<Books>(`${this.baseUrl}/books/${bookId}.json`, book)
-  //     .subscribe({
-  //       error: (err) => {
-  //         this.errorSubject.next(err)
-  //       },
-  //     });
-  // }
 
   updateBook(bookId: string, book: Books): Observable<Books> {
     const url = `${this.baseUrl}/books/${bookId}.json`;

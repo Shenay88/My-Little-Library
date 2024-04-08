@@ -1,33 +1,25 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { Observable, from, throwError } from 'rxjs';
 import { AuthResponse } from '../../Model/Auth';
-import { BehaviorSubject, catchError, tap, throwError, timestamp } from 'rxjs';
-import { User } from '../../Model/User';
+
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  user,
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class UserService {
-
   /* EXPLANATION
   ! MAIN
-  * 1. userSub = new BehaviorSubject<User>() -  It will emit User object and will contein JWT. If there is no JWT or the expire date finished it will return null
-  * 2. Subjects are multicast - can emit same data to multiple subscribers. BehaviorSubject is working as Subjects but the one advantage is that it is giving us the previously emitted data
-  * 3. With the "tap" operator/function we can tap into the response. We can do something with the response without modifying it.
-  * 4. post() - return Observable - handling asynchronous data streams.
-  * 5. <AuthResponse> when we sending a request we can also specify the type of data we are going to get in the response. It is a good practise.
-  
-  ! CreateUser()
-  * 1. We are calling the constructor of the User class and passing the values
-  * 2. Before creating the user we need to convert the time. The expiresIn property is stroring the value in seconds but the User class is execting a value of type Date.
-  * 3. const expiresInTimestamp = new Date().getTime() - First we take the timestamp of the current time
-  * 4. We multiply by 1000 to convert seconds to milliseconds
-  * 5. expiresInTimestamp - it returns us the timestamp of the expire time
-  * 6. expireInDate - it returns us the expire Date
-  * 7. After creating the new User we want to emit this object using user = new Subject<User>();
-  * 8. After it will be accessed from anywhere in the application
-  
+  * 1. user(this.firebaseAut) - returns us all user data. It is from Firebase
+  * 2. currentUserSignal - we create our signal because we don'want to use whole user.
+  * 3.  Firebase does not return Observable, it returns for us Promises. We return it in an Observable
   ! handleError()
   * 1. return - because we want to retun observable.
   * 2. When used in combination with the catchError operator, throwError allows you to handle errors within an observable stream and replace the errored observable with a new observable that emits a predefined error.
@@ -35,47 +27,32 @@ export class UserService {
 */
 
   http: HttpClient = inject(HttpClient);
-
-  // userSub = new BehaviorSubject<User>(null);
+  firebaseAut = inject(Auth);
+  user$ = user(this.firebaseAut); 
+  currentUserSignal = signal<AuthResponse | null | undefined>(undefined); 
 
   constructor() {}
-
-  signUp(email: string, password: string) {
-    const data = { email: email, password: password, returnSecureToken: true };
-    return this.http
-      .post<AuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD6Qkvor66wxiR2W86ESpgwfiARHLLOSB8',
-        data
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((res) => {
-          this.createUser(res);
-        })
-      );
+  signUp(email: string, password: string): Observable<void> {
+    const promise = createUserWithEmailAndPassword(
+      this.firebaseAut,
+      email,
+      password
+    ).then(() => {});
+    return from(promise);
   }
 
-  signIn(email: string, password: string) {
-    const data = { email: email, password: password, returnSecureToken: true };
-    return this.http
-      .post<AuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD6Qkvor66wxiR2W86ESpgwfiARHLLOSB8',
-        data
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((res) => {
-          this.createUser(res);
-        })
-      );
+  signIn(email: string, password: string): Observable<void> {
+    const promise = signInWithEmailAndPassword(
+      this.firebaseAut,
+      email,
+      password
+    ).then(() => {});
+    return from(promise);
   }
 
-  private createUser(res: any) {
-    const expiresInTimestamp =
-      new Date().getTime() + Number(res.expiresIn) * 1000;
-    const expireInDate = new Date(expiresInTimestamp);
-    const user = new User(res.email, res.localId, res.idToken, expireInDate);
-    // this.userSub.next(user);
+  logout(): Observable<void> {
+    const promise = signOut(this.firebaseAut);
+    return from(promise);
   }
 
   private handleError(err: HttpErrorResponse) {

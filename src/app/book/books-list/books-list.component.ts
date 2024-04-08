@@ -9,6 +9,7 @@ import { LoaderComponent } from '../../utility/loader/loader.component';
 import { Books } from '../../Model/Books';
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../Services/User/user.service';
 
 @Component({
   selector: 'books-list',
@@ -20,6 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class BooksListComponent {
   bookService: BooksService = inject(BooksService);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
+  userService = inject(UserService);
 
   booksList: Books[] = [];
   searchValue: any;
@@ -28,11 +30,15 @@ export class BooksListComponent {
 
   ngOnInit() {
     this.getAllBooks();
+   
   }
 
   private getAllBooks() {
+    
     this.bookService.getAllBooks().subscribe({
-      next: (books) => {
+      
+      next: (books:any) => {
+        
         this.booksList = books;
         this.loader = false;
       },
@@ -48,10 +54,10 @@ export class BooksListComponent {
   }
 
   private setErrMessage(err: HttpErrorResponse) {
-    if (err.error.error === 'Permission denied') {
+    if (err.error.error === 'Permission denied') { 
       this.errorMessage = 'You do not have permission to perform this action.';
     }
-  }
+  } 
 
   // ngOnInit(): void {
   // this.activeRoute.queryParamMap.subscribe((param) => {

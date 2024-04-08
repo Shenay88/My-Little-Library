@@ -49,7 +49,8 @@ export class AddBookComponent {
   addNewBook(bookForm: NgForm) {
     const createdAt = Date.now();
     this.book = { ...bookForm.value, createdAt, likes: 0 };
-
+    console.log(this.book)
+    console.log(bookForm)
     this.bookService.createBook(this.book).subscribe({
       next: () => {
         this.router.navigate(['/home']);

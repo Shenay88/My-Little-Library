@@ -5,6 +5,7 @@
   <div class="header-nav">
     <div class="top-nav">
       <div class="top-nav-items">
+        @if(this.userService.currentUserSignal() !== null) {
         <div
           class="item"
           routerLink="my-books"
@@ -28,11 +29,14 @@
           routerLink="logout"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
+          (click)="logout()"
         >
           <i class="fa-solid fa-right-from-bracket"></i>
           <a>Logout</a>
         </div>
 
+        } 
+        @if(this.userService.currentUserSignal() === null) {
         <div
           class="item"
           class="item"
@@ -43,6 +47,7 @@
           <i class="fa-solid fa-right-to-bracket"></i>
           <a>Login</a>
         </div>
+        }
       </div>
     </div>
   </div>

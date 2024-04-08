@@ -9,13 +9,29 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 
-import { authInterceptor } from './Services/User/auth.interceptor';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyD6Qkvor66wxiR2W86ESpgwfiARHLLOSB8',
+  authDomain: 'my-little-library-799e3.firebaseapp.com',
+  databaseURL: 'https://my-little-library-799e3-default-rtdb.firebaseio.com',
+  projectId: 'my-little-library-799e3',
+  storageBucket: 'my-little-library-799e3.appspot.com',
+  messagingSenderId: '227149753810',
+  appId: '1:227149753810:web:e817518c0bcd5404de2c0b',
+  measurementId: 'G-G7NJ2XEW77',
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch()),
+    importProvidersFrom([
+      provideFirebaseApp(() => initializeApp(firebaseConfig)),
+      provideAuth(() => getAuth()),
+    ]),
   ],
 };
 
