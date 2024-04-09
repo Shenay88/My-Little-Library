@@ -6,9 +6,9 @@
 <!-- ! 'btn': true -> that means this CSS class will apply always on this element button no matter other classes are true or false, but we can write it also like e normal class-->
 
 
-<div class="search-box">
-  <input class="search-box-input" #searchValue/>
-  <button class="search-btn" [routerLink]="'/home'" (click)="onSearch(searchValue.value)">Search</button>
+<div >
+  <div class="search-box">
+    <input type="search"  aria-label="search"  class="search-box-input" [(ngModel)]="cleanInput" placeholder="Search..." #searchValue/>
+    <button class="search-btn" (click)="onSearch(searchValue.value); emptyInput()">Search</button>
+  </div>
 </div>
-
- 

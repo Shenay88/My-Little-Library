@@ -1,4 +1,4 @@
-export interface AuthResponse {
+export interface UserInterfase {
   email: string;
-  
+  username: string;
 }

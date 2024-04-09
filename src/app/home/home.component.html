@@ -1,4 +1,27 @@
 <div class="book">
-    <search-box />
-    <books-list />
+  @if(loader) {
+  <loader />
+  }
+  <search-box />
+
+  @if(booksList.length > 0 || errorMessage === null || errorMessage === undefined || !loader) {
+    <!-- <app-sort-books (selectedBtn)="onClickFilterChanged($event)"></app-sort-books> -->
+  }
+
+  <div class="books-list-container">
+    @if(booksList.length > 0 || errorMessage === null || errorMessage ===  undefined && !loader) 
+    { 
+      @for(eachBook of booksList; track 'id') {
+    <!-- !Changes track eachBook.id-->
+    <book-card [book]="eachBook" />
+    } 
+  } 
+  @if(booksList.length === 0 && !loader) {
+    <h1>No Books</h1>
+    } 
+
+  @if(errorMessage) {
+    <snackbar [errorText]="errorMessage" />
+    }
+  </div>
 </div>

@@ -1,16 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
+import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+
 import { UserService } from '../../Services/User/user.service';
+
+
 import { LoaderComponent } from '../../utility/loader/loader.component';
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
-import { Observable, from } from 'rxjs';
-import { AuthResponse } from '../../Model/Auth';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from '@angular/fire/auth';
+
 
 @Component({
   selector: 'login-in-out',
@@ -30,12 +28,10 @@ export class LoginInOutComponent {
   router: Router = inject(Router);
   userService: UserService = inject(UserService);
 
-  authObservable = new Observable<AuthResponse>();
-
   isLoginForm: boolean = true;
   isLoading = false;
 
-  errMessage: string | null = null;
+  errorMessage: string | null = null;
 
   firebaseAut = inject(Auth);
 
@@ -56,70 +52,33 @@ export class LoginInOutComponent {
           this.router.navigateByUrl('/');
         },
         error: (err) => {
-          this.errMessage = err.code;
+
+          this.errorMessage = err.code;
+         
+          this.isLoading = false
+
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000)
+         
+          form.reset()
         },
       });
     } else {
-      this.userService.signUp(email, password).subscribe({
+      const username: string = form.value.username;
+      this.userService.signUp(email, username, password).subscribe({
         next: () => {
           this.router.navigateByUrl('/');
         },
         error: (err) => {
-          this.errMessage = err.code;
+          this.errorMessage = err.code;
+
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 3000)
         },
       });
     }
-
-    // this.authObservable.subscribe({  
-    //   next: (res) => {
-    //     localStorage.setItem('idToken', res.idToken);
-
-    //     this.userService.currentUserSignal.set(res);
-    //     this.isLoading = false;
-    //     this.router.navigate(['/home']);
-    //   },
-    //   error: (errorFromUserService) => {
-    //     this.isLoading = false;
-    //     this.errMessage = errorFromUserService;
-    //     setTimeout(() => {
-    //       this.errMessage = null;
-    //     }, 3000);
-    //   },
-    // });
-
-    // form.reset();
   }
 
-  // onSubmitUser(form: NgForm) {
-  //   const email: string = form.value.email;
-  //   const password: string = form.value.password;
-
-  //   if (this.isLoginForm) {
-  //     this.isLoading = true;
-  //     this.authObservable = this.userService.signIn(email, password);
-  //   } else {
-  //     this.isLoading = true;
-  //     this.authObservable = this.userService.signUp(email, password);
-  //   }
-
-  //   this.authObservable.subscribe({
-  //     next: (res) => {
-
-  //       localStorage.setItem('idToken', res.idToken);
-
-  //       this.userService.currentUserSignal.set(res)
-  //       this.isLoading = false;
-  //       this.router.navigate(['/home'])
-  //     },
-  //     error: (errorFromUserService) => {
-  //       this.isLoading = false;
-  //       this.errMessage = errorFromUserService;
-  //       setTimeout(() => {
-  //         this.errMessage = null;
-  //       }, 3000);
-  //     },
-  //   });
-
-  //   form.reset();
-  // }
 }

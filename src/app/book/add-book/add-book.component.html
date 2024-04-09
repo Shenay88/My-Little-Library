@@ -72,7 +72,7 @@
         name="imageURL"
         ngModel
         required
-        pattern="https:\/\/"
+        pattern="https:\/\/.*"
         #imageURL = 'ngModel'
         />
         @if(imageURL.invalid && (imageURL.dirty || imageURL.touched)){

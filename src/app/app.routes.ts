@@ -7,10 +7,11 @@ import { BookDetailsComponent } from './book/book-details/book-details.component
 import { EditBookComponent } from './book/edit-book/edit-book.component';
 import { LoginInOutComponent } from './user/logIn-out/login-in-out.component';
 
+
 export const routes: Routes = [
     {path: '', redirectTo: 'home', title:'Home', pathMatch: 'full'},
     {path: 'home', title: 'Home', component: HomeComponent},
-    {path: 'add-book', title: 'New Book', component: AddBookComponent},
+    {path: 'add-book', title: 'New Book', component: AddBookComponent, },
     {path: 'my-books', title: 'My Books', component: MyBooksComponent},
     {path: 'books/book-details/:id', component: BookDetailsComponent},
     {path: 'books/book/:id', component: EditBookComponent},

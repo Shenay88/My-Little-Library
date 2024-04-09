@@ -10,11 +10,12 @@ import { BooksService } from '../../Services/Books/books.service';
 import { Books } from '../../Model/Books';
 
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
+import { LoaderComponent } from '../../utility/loader/loader.component';
 
 @Component({
   selector: 'edit-book',
   standalone: true,
-  imports: [FormsModule, CommonModule, SnackbarComponent],
+  imports: [FormsModule, CommonModule, SnackbarComponent, LoaderComponent],
   templateUrl: './edit-book.component.html',
   styleUrl: './edit-book.component.css',
 })
@@ -27,6 +28,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   errMessage: string | null = null;
   bookId: string | null = null;
+  isLoader: boolean = true;
   selectedBook: Books = {
     bookTitle: '',
     authorName: '',
@@ -35,24 +37,30 @@ export class EditBookComponent implements OnInit, OnDestroy {
     ageFrom: 0,
     ageTo: 0,
     description: '',
+    id: '',
+    ownerId: '',
+    createdAt: 0,
     likes: 0,
+    username: ''
   };
 
-  constructor() {}
-
   ngOnInit(): void {
-    // this.bookId = this.activeRoute.snapshot.paramMap.get('id');
 
     this.activeRoute.paramMap.subscribe((paramMap) => {
       this.bookId = paramMap.get('id');
+      console.log(this.bookId)
 
       if (this.bookId) {
+        this.isLoader = true;
         this.bookService.getBookById(this.bookId).subscribe({
           next: (book) => {
             this.selectedBook = book;
+            console.log(this.selectedBook)
+            this.isLoader = false;
           },
           error: (err) => {
             this.errMessage = err.message;
+            this.isLoader = false;
           },
         });
       }
@@ -76,14 +84,18 @@ export class EditBookComponent implements OnInit, OnDestroy {
   editBook(editBookForm: NgForm): void {
     if (!this.bookId) return;
 
-    this.selectedBook = editBookForm.value;
+    this.selectedBook = { ...this.selectedBook, ...editBookForm.value };
+
+    console.log(this.selectedBook)
 
     this.bookService.updateBook(this.bookId, this.selectedBook).subscribe({
       next: () => {
+        this.isLoader = false;
         this.router.navigate(['/books/book-details/', this.bookId]);
       },
       error: (err) => {
         this.errMessage = err.message;
+        this.isLoader = false;
       },
     });
   }

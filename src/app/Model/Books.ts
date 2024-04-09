@@ -7,6 +7,9 @@ export interface Books {
   description: string;
   id?: string;
   imageURL: string;
-  createdAt?: number
-  likes: number
+  createdAt: number;
+  ownerId?: string;
+  likes?: number;
+  username?: string;
 }
+ 

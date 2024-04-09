@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import { UserService } from './Services/User/user.service';
-import { AuthResponse } from './Model/Auth';
 
 @Component({
   selector: 'app-root',
@@ -12,25 +11,26 @@ import { AuthResponse } from './Model/Auth';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'My-Little-Library';
 
   userService = inject(UserService);
-
- 
+  user: any
 
   ngOnInit(): void {
-    this.userService.user$.subscribe((user) => {
-      if(user) {
+    this.userService.user$.subscribe(user => {
+      if (user) {
         this.userService.currentUserSignal.set({
           email: user.email!,
-        })
+          username: user.displayName!,
+        });
+        this.user = user.displayName
+       
       } else {
-        this.userService.currentUserSignal.set(null)
+        this.userService.currentUserSignal.set(null);
       }
-      console.log(this.userService.currentUserSignal())
     });
+   
 
-    
   }
 }

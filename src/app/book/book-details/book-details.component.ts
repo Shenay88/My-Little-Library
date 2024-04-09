@@ -1,56 +1,69 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { Books } from '../../Model/Books';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BooksService } from '../../Services/Books/books.service';
+import { UserService } from '../../Services/User/user.service';
+import { CommonModule } from '@angular/common';
+import { LoaderComponent } from '../../utility/loader/loader.component';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule, LoaderComponent],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.css',
 })
 export class BookDetailsComponent implements OnInit {
-  paramMapSubscription: Subscription = new Subscription();
+  activeRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  block = 'initial';
+
+  bookService = inject(BooksService);
+  userService = inject(UserService);
+
+  paramMapSubscription = new Subscription();
+
   bookId: string | null = null;
   selectedBook: any;
-
-  activeRoute: ActivatedRoute = inject(ActivatedRoute);
-  bookService: BooksService = inject(BooksService);
-  router: Router = inject(Router);
-
-  constructor() {}
+  isUser: boolean = false;
+  username: string | undefined = undefined;
+  isLoader: boolean = true;
+  like: number = 0
+  dislike: number = 0
 
   ngOnInit(): void {
     this.paramMapSubscription = this.activeRoute.paramMap.subscribe((data) => {
       this.bookId = data.get('id');
+      this.isLoader = true;
       this.fetchBookDetails();
+      this.isLoader = false;
+
+      console.log(this.bookId)
+      console.log(this.userService.currentUserSignal()?.email)
     });
   }
 
   fetchBookDetails(): void {
+   
     if (this.bookId) {
       this.bookService.getBookById(this.bookId).subscribe((book) => {
         this.selectedBook = book;
+        if (this.userService.currentUserSignal()?.email === book.ownerId) {
+          this.isUser = true;
+        }
       });
     }
+    
   }
 
   deleteSelectedBook(): void {
-
+    this.isLoader = true;
     if (this.bookId) {
-      // Clear selectedBook immediately
-      this.selectedBook = null;
-
       this.bookService.deleteBook(this.bookId).subscribe(() => {
-        this.paramMapSubscription.unsubscribe(); // Unsubscribe from paramMapSubscription
+        this.selectedBook = null;
         this.router.navigate(['/home']);
       });
     }
+    this.isLoader = false;
   }
-
-  // ngOnDestroy(): void {
-  //   this.paramMapSubscription.unsubscribe();
-  // }
 }

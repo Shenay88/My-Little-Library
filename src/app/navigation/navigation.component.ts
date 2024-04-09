@@ -1,45 +1,36 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../Services/User/user.service';
-import { UserInfo } from 'os';
-import { User } from '../Model/User';
-import { Subscription } from 'rxjs';
+import { BottomNavComponent } from './bottom-nav/bottom-nav.component';
 
 @Component({
   selector: 'navigation',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, BottomNavComponent],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css',
 })
 export class NavigationComponent {
   isUser: boolean = false;
   userService = inject(UserService);
-  router = inject( Router)
+  router = inject(Router);
+  name!: string | undefined;
+
+  @Input() user!: string;
 
   ngOnInit() {
     if (!this.userService.currentUserSignal()) {
       this.isUser = true;
-    } if (this.userService.currentUserSignal() === null) {
+      this.name = this.userService.currentUserSignal()?.username;
+    }
+    if (this.userService.currentUserSignal() === null) {
       this.isUser = false;
     }
-
-    // Whenever the subject is going to emit a new velue the subscriber will notified about it
-    // The userSub/subscribe method return Subscribtion and it is good practise if we unsubscribe
-    // this.userSub = this.authService.userSub.subscribe((user: User) => {
-    //   this.isUser = user ? true : false;
-    // });
   }
 
   logout() {
     this.userService.logout().subscribe(() => {
-     
-      // this.userService.currentUserSignal() === null
       this.router.navigate(['/home']);
-    })
+    });
   }
-
-  // ngOnDestroy() {
-  //   this.userSub.unsubscribe();
-  // }
 }

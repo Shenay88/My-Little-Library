@@ -1,28 +1,52 @@
+@if(isLoader) {
+<loader />
+} 
+
+@if(selectedBook && !isLoader) {
 <section class="book-details">
-    <div class="details-book">
-      <h2 class="title">{{selectedBook?.bookTitle}}</h2>
-      <h3>{{selectedBook?.authorName}}</h3>
-      <div class="book-container">
-        <div class="book-details-img">
-        <img [src]="selectedBook?.imageURL" alt={{selectedBook?.bookTitle}} />
-        </div>
-        
-        <div class="book">
-          <div class="book-info">
-            <p><span>Category:</span>{{selectedBook?.category}}</p>
-            <p><span>Age:</span>{{selectedBook?.ageFrom}} - {{selectedBook?.ageTo}} years</p>
-            <p><span>Uploaded by:</span>Who Knows</p>
-            <p><span>Description:</span>{{selectedBook?.description}}</p>
-          </div>
-      
-        </div>
+  <div class="details-book">
+    <h2 class="title">{{ selectedBook?.bookTitle }}</h2>
+    <h3>{{ selectedBook?.authorName }}</h3>
+    <div class="book-container">
+      <div class="book-details-img">
+        <img [src]="selectedBook?.imageURL" [alt]="selectedBook?.bookTitle" />
       </div>
-      <!--Edit and Delete are only for creator-->
-      <div class="action-buttons">
-        <a [routerLink]="['/books/book/', bookId]" class="edit-btn" >Edit</a>
-        <a [routerLink]="'/books/book/' + selectedBook?.id" class="delete-btn" (click)="deleteSelectedBook()">Delete</a> 
-        <!-- <a href="#" class="like-btn">Like</a> -->
+
+      <div class="book">
+        <div class="book-info">
+          <p><span>Category:</span>{{ selectedBook?.category }}</p>
+          <p>
+            <span>Age:</span>{{ selectedBook?.ageFrom }} -
+            {{ selectedBook?.ageTo }} years
+          </p>
+          <p><span>Added by:</span>{{ selectedBook?.username }}</p>
+          <p><span>Description:</span>{{ selectedBook?.description }}</p>
+        </div>
       </div>
     </div>
-  </section>
-  
+    
+    @if(this.userService.currentUserSignal()?.email &&
+    (this.userService.currentUserSignal()?.email !== selectedBook?.ownerId)){
+    <div class="buttons-like-dislike">
+      <a class="like"><i class="fa-solid fa-thumbs-up"></i>{{ like }}</a>
+      <a class="dislike">
+        <i class="fa-solid fa-thumbs-down"></i>{{ dislike }}
+      </a>
+    </div>
+    }
+    
+    @if(this.userService.currentUserSignal()?.email &&
+    (this.userService.currentUserSignal()?.email=== selectedBook?.ownerId)) {
+    <div class="action-buttons">
+      <a [routerLink]="['/books/book/', bookId]" class="edit-btn">Edit</a>
+      <a
+        [routerLink]="'/books/book/' + bookId"
+        class="delete-btn"
+        (click)="deleteSelectedBook()"
+        >Delete</a
+      >
+    </div>
+    }
+  </div>
+</section>
+}

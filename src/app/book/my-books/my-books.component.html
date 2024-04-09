@@ -1,1 +1,13 @@
-<p>my-books works!</p>
+<div class="myBooks-list-container">
+  @if(isLoader) {
+  <loader />
+  } 
+  @if(myBooks.length > 0 && !isLoader) { 
+    @for(eachBook of myBooks; track eachBook.ownerId) {
+      <book-card [book]="eachBook" />
+    } 
+  } 
+@if(myBooks.length === 0 && !isLoader) {
+  <h2>You do not have books!</h2>
+  }
+</div>

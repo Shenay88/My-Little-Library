@@ -3,7 +3,6 @@ import { Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 
-
 @Component({
   selector: 'search-box',
   standalone: true,
@@ -14,9 +13,14 @@ import { RouterLink, Router } from '@angular/router';
 export class SearchBoxComponent {
 
   router: Router = inject(Router);
+  cleanInput: string = ''
 
   onSearch(searchValue: string){
     this.router.navigate(['/home'], {queryParams: {search: searchValue}})
 
+  }
+
+  emptyInput() {
+    this.cleanInput = ''; // Clear the search input value
   }
 }

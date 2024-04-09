@@ -1,13 +1,37 @@
 <section class="logIn-out">
   <div class="userForm">
-    @if(isLoading) { <loader /> } 
-    
-    @if(errMessage) {
-    <snackbar [errorText]="errMessage" />
+    @if(isLoading) { <loader /> } @if(errorMessage) {
+    <snackbar [errorText]="errorMessage" />
     }
-    
+
     <form #userForm="ngForm" (ngSubmit)="onSubmitUser(userForm)">
       <h2>{{ isLoginForm ? "Login" : "Sign Up" }}</h2>
+      @if(!isLoginForm) {
+      <div class="input-box">
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          ngModel
+          required
+          minlength="3"
+          pattern="^[^\s]+(\s+[^\s]+)*$"
+          #username="ngModel"
+        />
+        <label for="email">Username</label>
+      </div>
+      @if(username.invalid && (username.dirty || username.touched)){
+      <div class="error-log">
+        @if(username.errors?.['required']) {<small>*Username is required.</small
+        >} @if(username.errors?.['pattern']) {<small
+          >*Invalid format for username.</small
+        >} @if(username.errors?.['minlengt']) {<small
+          >*Username must be at least 3 characters long.</small
+        >}
+      </div>
+      } }
+
       <div class="input-box">
         <span class="icon"><i class="fa-solid fa-envelope"></i></span>
         <input
@@ -19,15 +43,18 @@
           email
           pattern="^[^\s]+(\s+[^\s]+)*$"
           #email="ngModel"
-      />
+        />
         <label for="email">Email</label>
       </div>
       @if(email.invalid && (email.dirty || email.touched)){
-        <div class="error-log">
-         @if(email.errors?.['required']) {<small>*Email is required.</small>}
-         @if(email.errors?.['pattern'] || email.errors?.['email']) {<small>*Invalid format for email.</small>}
-        </div>
-       }
+      <div class="error-log">
+        @if(email.errors?.['required']) {<small>*Email is required.</small>}
+        @if(email.errors?.['pattern'] || email.errors?.['email']) {<small
+          >*Invalid format for email.</small
+        >}
+      </div>
+      }
+
       <div class="input-box">
         <span class="icon"><i class="fa-solid fa-lock"></i></span>
         <input
@@ -38,22 +65,26 @@
           required
           minlength="8"
           pattern="^[^\s]+(\s+[^\s]+)*$"
-          #password = "ngModel"
+          #password="ngModel"
         />
         <label for="password">Password</label>
       </div>
       @if(password.invalid && (password.dirty || password.touched)){
-        <div class="error-log">
-         @if(password.errors?.['required']) {<small>*Password is required.</small>}
-         @if(password.errors?.['pattern'] || email.errors?.['email']) {<small>*Password must be at least 8 characters long.</small>}
-        </div>
-       }
+      <div class="error-log">
+        @if(password.errors?.['required']) {<small>*Password is required.</small
+        >} @if(password.errors?.['pattern'] || email.errors?.['email']) {<small
+          >*Password must be at least 8 characters long.</small
+        >}
+      </div>
+      }
       <button class="sub-btn" type="submit" [disabled]="userForm.invalid">
         {{ isLoginForm ? "Login" : "Register" }}
       </button>
       <div class="link">
         <p>
-          {{ isLoginForm ? "Don't have an account?" : "Already have an account?" }}
+          {{
+            isLoginForm ? "Don't have an account?" : "Already have an account?"
+          }}
           <button class="link-btn" type="button" (click)="onSwitch()">
             {{ isLoginForm ? "Register" : "Login" }}
           </button>

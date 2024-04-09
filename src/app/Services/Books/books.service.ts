@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Books } from '../../Model/Books';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
 import { UserService } from '../User/user.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -47,18 +48,20 @@ export class BooksService {
 
   errorSubject = new Subject<HttpErrorResponse>();
 
+  constructor() {}
+
   createBook(book: Books): Observable<any> {
     return this.http
       .post<{ name: string }>(`${this.baseUrl}/books.json`, book)
       .pipe(
         catchError((err) => {
-          this.errorSubject.next(err.error.message || 'An error occurred')
+          this.errorSubject.next(err.error.message || 'An error occurred');
           return throwError(() => console.log(err));
         })
       );
   }
 
-  deleteBook(bookId: string | undefined) {
+  deleteBook(bookId: string | undefined): Observable<any> {
     return this.http.delete(`${this.baseUrl}/books/${bookId}.json`);
   }
 
@@ -69,7 +72,7 @@ export class BooksService {
       )
       .pipe(
         map((response) => {
-          let books = [];
+          let books: any[] = [];
           for (let key in response) {
             if (response.hasOwnProperty(key)) {
               books.push({ ...response[key], id: key });
@@ -80,7 +83,7 @@ export class BooksService {
       );
   }
 
-  getBookById(bookId: string) {
+  getBookById(bookId: string): Observable<Books> {
     return this.http.get<Books>(`${this.baseUrl}/books/${bookId}.json`);
   }
 
