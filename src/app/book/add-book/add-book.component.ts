@@ -53,7 +53,7 @@ export class AddBookComponent implements OnInit {
     const ownerId = this.userService.currentUserSignal()?.email;
     const username = this.userService.currentUserSignal()?.username;
 
-    this.book = { ...bookForm.value, createdAt, ownerId , username, likes: 0};
+    this.book = { ...bookForm.value, createdAt, ownerId , username, likes: 0, dislikes: 0};
 
     this.bookService.createBook(this.book).subscribe({
       next: () => {

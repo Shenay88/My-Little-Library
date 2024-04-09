@@ -41,6 +41,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
     ownerId: '',
     createdAt: 0,
     likes: 0,
+    dislikes: 0,
     username: ''
   };
 

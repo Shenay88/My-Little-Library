@@ -10,6 +10,7 @@ export interface Books {
   createdAt: number;
   ownerId?: string;
   likes?: number;
+  dislikes?: number;
   username?: string;
 }
  

@@ -30,6 +30,8 @@ export class BookDetailsComponent implements OnInit {
   isLoader: boolean = true;
   like: number = 0
   dislike: number = 0
+  isClicked: boolean = false;
+
 
   ngOnInit(): void {
     this.paramMapSubscription = this.activeRoute.paramMap.subscribe((data) => {
@@ -52,8 +54,19 @@ export class BookDetailsComponent implements OnInit {
           this.isUser = true;
         }
       });
-    }
-    
+    } 
+  }
+
+  onLikesCount(){
+    this.like++
+    this.updateLikesCount();
+    this.isClicked = true;
+  }
+
+  onDisikesCount() {
+    this.dislike--;
+    this.updateLikesCount();
+    this.isClicked = true;
   }
 
   deleteSelectedBook(): void {
@@ -65,5 +78,16 @@ export class BookDetailsComponent implements OnInit {
       });
     }
     this.isLoader = false;
+  }
+
+  updateLikesCount(): void {
+    if(!this.bookId) {
+      return;
+    }
+
+    this.selectedBook = {  ...this.selectedBook, likes : this.like, dislikes: this.dislike}
+
+
+    this.bookService.updateBook(this.bookId, this.selectedBook).subscribe();
   }
 }

@@ -28,10 +28,10 @@
     @if(this.userService.currentUserSignal()?.email &&
     (this.userService.currentUserSignal()?.email !== selectedBook?.ownerId)){
     <div class="buttons-like-dislike">
-      <a class="like"><i class="fa-solid fa-thumbs-up"></i>{{ like }}</a>
-      <a class="dislike">
-        <i class="fa-solid fa-thumbs-down"></i>{{ dislike }}
-      </a>
+      <button class="like" (click)="onLikesCount()" [disabled]="isClicked"><i class="fa-solid fa-thumbs-up"></i>{{ like }}</button>
+      <button class="dislike" (click)="onDisikesCount()" [disabled]="isClicked">
+        <i class="fa-solid fa-thumbs-down" ></i>{{ dislike }}
+      </button>
     </div>
     }
     
