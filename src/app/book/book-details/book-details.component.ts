@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BooksService } from '../../Services/Books/books.service';
@@ -32,16 +32,12 @@ export class BookDetailsComponent implements OnInit {
   dislike: number = 0
   isClicked: boolean = false;
 
-
   ngOnInit(): void {
     this.paramMapSubscription = this.activeRoute.paramMap.subscribe((data) => {
       this.bookId = data.get('id');
       this.isLoader = true;
       this.fetchBookDetails();
       this.isLoader = false;
-
-      console.log(this.bookId)
-      console.log(this.userService.currentUserSignal()?.email)
     });
   }
 
@@ -50,6 +46,8 @@ export class BookDetailsComponent implements OnInit {
     if (this.bookId) {
       this.bookService.getBookById(this.bookId).subscribe((book) => {
         this.selectedBook = book;
+        this.like = this.selectedBook.likes
+        this.dislike = this.selectedBook.dislikes
         if (this.userService.currentUserSignal()?.email === book.ownerId) {
           this.isUser = true;
         }
@@ -58,9 +56,10 @@ export class BookDetailsComponent implements OnInit {
   }
 
   onLikesCount(){
-    this.like++
+    this.like++;
     this.updateLikesCount();
     this.isClicked = true;
+    console.log(this.like)
   }
 
   onDisikesCount() {

@@ -1,5 +1,5 @@
 .book-list {
-    width: 300px;
+    width: 320px;
     background-color: rgba(245, 245, 245, 0.861);
     margin: 10px 15px;
     padding-top: 10px;
@@ -50,3 +50,23 @@
     margin: 5px 10px;
 }
 
+.reading-age {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    
+}
+
+.like{
+    margin-left: 60px;
+}
+
+.like i {
+    color: #60218c;
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.like span {
+    font-size: 20px;
+}
