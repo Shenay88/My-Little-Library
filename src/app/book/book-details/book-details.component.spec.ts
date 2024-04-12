@@ -15,7 +15,7 @@ describe('BookDetailsComponent', () => {
     fixture = TestBed.createComponent(BookDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }); 
 
   it('should create', () => {
     expect(component).toBeTruthy();

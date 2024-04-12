@@ -42,7 +42,7 @@
         name="like"
         (click)="handleButtonClick(likeButton.name)"
       >
-        <i class="fa-solid fa-thumbs-up"></i>
+        <i class="fa-solid fa-thumbs-up"></i><span>{{likesCount}}</span>
       </button>
       <button
         class="dislike"
@@ -50,7 +50,7 @@
         name="dislike"
         (click)="handleButtonClick(dislikeButton.name)"
       >
-        <i class="fa-solid fa-thumbs-down"></i><span></span>
+        <i class="fa-solid fa-thumbs-down"></i><span>{{dislikesCount}}</span>
       </button>
     </div>
     } @if(this.userService.currentUserSignal()?.email &&

@@ -34,6 +34,10 @@ export class BookDetailsComponent implements OnInit {
   isClicked: boolean = false;
   errorMessage: string | null | undefined = '';
   userEmail: string | undefined | null = undefined;
+  emailExistsInLikes: boolean = false;
+  emailExistsInDislikes: boolean = false;
+  likesCount: number = 0;
+  dislikesCount: number = 0;
 
   ngOnInit(): void {
     this.paramMapSubscription = this.activeRoute.paramMap.subscribe((data) => {
@@ -47,8 +51,22 @@ export class BookDetailsComponent implements OnInit {
     if (this.bookId) {
       this.booksService.getBookById(this.bookId).subscribe((book) => {
         this.selectedBook = book;
+
+        // Ensure likesArr and dislikesArr are initialized as arrays
+        this.selectedBook.likesArr = this.selectedBook.likesArr || [];
+        this.selectedBook.dislikesArr = this.selectedBook.dislikesArr || [];
+
+        this.emailExistsInLikes = this.selectedBook.likesArr.includes(this.userEmail);
+        this.emailExistsInDislikes = this.selectedBook.dislikesArr.includes(this.userEmail);
+
+        if (this.selectedBook.likesArr) {
+          this.likesCount = this.selectedBook.likesArr.length;
+        }
+
+        if (this.selectedBook.dislikesArr) {
+          this.dislikesCount = this.selectedBook.dislikesArr.length;
+        }
         this.isLoader = false;
-        
       });
     }
   }
@@ -80,44 +98,38 @@ export class BookDetailsComponent implements OnInit {
     }
 
     if (btnName === 'like') {
-      // Ensure likesArr is initialized as an array
-      this.selectedBook.likesArr = this.selectedBook.likesArr || [];
+  
+      if (this.emailExistsInLikes || this.emailExistsInDislikes) {
+        this.errorMessage = 'You already vote for this book';
 
-      let emailExistsInLikes = false;
-      for (const email of this.selectedBook.likesArr) {
-        if (email === this.userEmail) {
-          emailExistsInLikes = true;
-          break;
-        }
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
+        return;
       }
 
-      if (!emailExistsInLikes) {
-        this.selectedBook.likesArr.push(this.userEmail);
-      }
-      this.isClicked = true;
+      this.likesCount++;
+      this.selectedBook.likesArr.push(this.userEmail);
     }
 
     if (btnName === 'dislike') {
 
-         // Ensure dislikesArr is initialised as an array
-         this.selectedBook.dislikesArr = this.selectedBook.dislikesArr || [];
-      
-         let emailExistsInDislikes = false;
-         for (const email of this.selectedBook.dislikesArr) {
-           if (email === this.userEmail) {
-             emailExistsInDislikes = true;
-             break;
-           }
-         }
+      if (this.emailExistsInDislikes || this.emailExistsInLikes) {
+        this.errorMessage = 'You already vote for this book';
 
-         if (!emailExistsInDislikes) {
-           this.selectedBook.dislikesArr.push(this.userEmail);
-         }
-      this.isClicked = true;
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
+        return;
+      }
+
+      this.dislikesCount++;
+      this.selectedBook.dislikesArr.push(this.userEmail);
     }
 
+    this.isClicked = true;
+
     this.booksService.updateBook(this.bookId, this.selectedBook).subscribe();
-   
   }
 
   ngOnDestroy() {
