@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -37,26 +37,30 @@ export class EditBookComponent implements OnInit, OnDestroy {
     ageFrom: 0,
     ageTo: 0,
     description: '',
-    id: '',
+    bookId: '',
     ownerId: '',
     createdAt: 0,
-    likes: 0,
-    dislikes: 0,
-    username: ''
+    username: '',
   };
 
   ngOnInit(): void {
+    /* EXPLANATION 
+    
+    !Error Handling in Component
+    * 1. In the component, we handle errors that occur specifically during the retrieval of a single book (getBookById). This allows us to provide immediate feedback to the user if there's an issue fetching the book data. For example, if there's a network error or the requested book doesn't exist.
 
-    this.activeRoute.paramMap.subscribe((paramMap) => {
+    !ErrorSubject from the BooksService
+    * 1. Allows us to capture any general errors that might occur during HTTP requests in the service. This provides a centralised way to handle errors that occur across multiple operations in the service.
+     */
+
+    this.activeRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.bookId = paramMap.get('id');
-      console.log(this.bookId)
 
       if (this.bookId) {
         this.isLoader = true;
         this.bookService.getBookById(this.bookId).subscribe({
           next: (book) => {
             this.selectedBook = book;
-            console.log(this.selectedBook)
             this.isLoader = false;
           },
           error: (err) => {
@@ -87,8 +91,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
     this.selectedBook = { ...this.selectedBook, ...editBookForm.value };
 
-    console.log(this.selectedBook)
-
     this.bookService.updateBook(this.bookId, this.selectedBook).subscribe({
       next: () => {
         this.isLoader = false;
@@ -96,7 +98,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.errMessage = err.message;
-        this.isLoader = false;
+        this.isLoader = false; 
       },
     });
   }

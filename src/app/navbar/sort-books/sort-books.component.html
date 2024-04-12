@@ -1,0 +1,15 @@
+
+<div class="sorted-list-container">
+  @if(isLoader) {
+  <loader />
+  } 
+  @if(booksList.length > 0 && !isLoader) { 
+    @for(eachBook of booksList; track eachBook.bookId) {
+      <book-card [book]="eachBook" />
+    } 
+  } 
+@if(booksList.length === 0 && !isLoader) {
+  <h2>You do not have books!</h2>
+  }
+</div>
+

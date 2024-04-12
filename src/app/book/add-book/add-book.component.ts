@@ -6,6 +6,7 @@ import { Books } from '../../Model/Books';
 import { Router, RouterLink } from '@angular/router';
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 import { UserService } from '../../Services/User/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-book',
@@ -34,11 +35,13 @@ export class AddBookComponent implements OnInit {
     ageTo: 0,
     description: '',
     createdAt: 0,
+    ownerId: '',
+    username: '',
   };
 
   ngOnInit() {
     this.bookService.errorSubject.subscribe({
-      next: (httErr) => {
+      next: (httErr: HttpErrorResponse) => {
         this.errMessage = httErr.error.error;
 
         setTimeout(() => {
@@ -53,7 +56,9 @@ export class AddBookComponent implements OnInit {
     const ownerId = this.userService.currentUserSignal()?.email;
     const username = this.userService.currentUserSignal()?.username;
 
-    this.book = { ...bookForm.value, createdAt, ownerId , username, likes: 0, dislikes: 0};
+    if (ownerId !== undefined || ownerId !== null) {
+      this.book = { ...bookForm.value, createdAt, ownerId, username };
+    }
 
     this.bookService.createBook(this.book).subscribe({
       next: () => {

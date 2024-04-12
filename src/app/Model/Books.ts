@@ -5,12 +5,13 @@ export interface Books {
   bookTitle: string;
   category: string;
   description: string;
-  id?: string;
   imageURL: string;
   createdAt: number;
-  ownerId?: string;
-  likes?: number;
-  dislikes?: number;
-  username?: string;
+  ownerId: string,
+  username: string,
+  bookId?: string
+  likesArr?: [],
+  dislikesArr?: [],
 }
+
  

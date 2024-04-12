@@ -1,7 +1,14 @@
 <div class="myBooks-list-container">
+  
   @if(isLoader) {
   <loader />
   } 
+
+  @if(errorMessage !== null && errorMessage !== '' && errorMessage !== undefined &&
+  !isLoader) {
+  <snackbar [errorText]="errorMessage" />
+  } 
+
   @if(myBooks.length > 0 && !isLoader) { 
     @for(eachBook of myBooks; track eachBook.ownerId) {
       <book-card [book]="eachBook" />

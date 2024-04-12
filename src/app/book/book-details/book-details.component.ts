@@ -1,77 +1,62 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BooksService } from '../../Services/Books/books.service';
 import { UserService } from '../../Services/User/user.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { LoaderComponent } from '../../utility/loader/loader.component';
+import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [RouterLink, CommonModule, LoaderComponent],
+  imports: [
+    RouterLink,
+    CommonModule,
+    LoaderComponent,
+    DatePipe,
+    SnackbarComponent,
+  ],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.css',
 })
 export class BookDetailsComponent implements OnInit {
   activeRoute = inject(ActivatedRoute);
   router = inject(Router);
-  block = 'initial';
-
-  bookService = inject(BooksService);
+  booksService = inject(BooksService);
   userService = inject(UserService);
 
   paramMapSubscription = new Subscription();
 
   bookId: string | null = null;
   selectedBook: any;
-  isUser: boolean = false;
-  username: string | undefined = undefined;
   isLoader: boolean = true;
-  like: number = 0
-  dislike: number = 0
   isClicked: boolean = false;
+  errorMessage: string | null | undefined = '';
+  userEmail: string | undefined | null = undefined;
 
   ngOnInit(): void {
     this.paramMapSubscription = this.activeRoute.paramMap.subscribe((data) => {
-      this.bookId = data.get('id');
-      this.isLoader = true;
+      this.bookId = data.get('bookId');
       this.fetchBookDetails();
-      this.isLoader = false;
+      this.userEmail = this.userService.currentUserSignal()?.email;
     });
   }
 
   fetchBookDetails(): void {
-   
     if (this.bookId) {
-      this.bookService.getBookById(this.bookId).subscribe((book) => {
+      this.booksService.getBookById(this.bookId).subscribe((book) => {
         this.selectedBook = book;
-        this.like = this.selectedBook.likes
-        this.dislike = this.selectedBook.dislikes
-        if (this.userService.currentUserSignal()?.email === book.ownerId) {
-          this.isUser = true;
-        }
+        this.isLoader = false;
+        
       });
-    } 
-  }
-
-  onLikesCount(){
-    this.like++;
-    this.updateLikesCount();
-    this.isClicked = true;
-    console.log(this.like)
-  }
-
-  onDisikesCount() {
-    this.dislike--;
-    this.updateLikesCount();
-    this.isClicked = true;
+    }
   }
 
   deleteSelectedBook(): void {
     this.isLoader = true;
     if (this.bookId) {
-      this.bookService.deleteBook(this.bookId).subscribe(() => {
+      this.booksService.deleteBook(this.bookId).subscribe(() => {
         this.selectedBook = null;
         this.router.navigate(['/home']);
       });
@@ -79,14 +64,63 @@ export class BookDetailsComponent implements OnInit {
     this.isLoader = false;
   }
 
-  updateLikesCount(): void {
-    if(!this.bookId) {
+  handleButtonClick(btnName: string) {
+    if (!this.bookId) {
       return;
     }
 
-    this.selectedBook = {  ...this.selectedBook, likes : this.like, dislikes: this.dislike}
+    if (!this.userEmail) {
+      this.errorMessage = 'User email is undefined. Please log in again.';
 
+      setTimeout(() => {
+        this.errorMessage = null;
+        this.router.navigate(['/home']);
+      }, 3000);
+      return;
+    }
 
-    this.bookService.updateBook(this.bookId, this.selectedBook).subscribe();
+    if (btnName === 'like') {
+      // Ensure likesArr is initialized as an array
+      this.selectedBook.likesArr = this.selectedBook.likesArr || [];
+
+      let emailExistsInLikes = false;
+      for (const email of this.selectedBook.likesArr) {
+        if (email === this.userEmail) {
+          emailExistsInLikes = true;
+          break;
+        }
+      }
+
+      if (!emailExistsInLikes) {
+        this.selectedBook.likesArr.push(this.userEmail);
+      }
+      this.isClicked = true;
+    }
+
+    if (btnName === 'dislike') {
+
+         // Ensure dislikesArr is initialised as an array
+         this.selectedBook.dislikesArr = this.selectedBook.dislikesArr || [];
+      
+         let emailExistsInDislikes = false;
+         for (const email of this.selectedBook.dislikesArr) {
+           if (email === this.userEmail) {
+             emailExistsInDislikes = true;
+             break;
+           }
+         }
+
+         if (!emailExistsInDislikes) {
+           this.selectedBook.dislikesArr.push(this.userEmail);
+         }
+      this.isClicked = true;
+    }
+
+    this.booksService.updateBook(this.bookId, this.selectedBook).subscribe();
+   
+  }
+
+  ngOnDestroy() {
+    this.paramMapSubscription.unsubscribe();
   }
 }

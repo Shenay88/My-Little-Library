@@ -16,22 +16,27 @@
 
 .bottom-bar-btn {
     text-decoration: none;   
-    padding: 0 10px; 
+    padding: 5px 25px; 
     color: rgba(255, 255, 255, 0.833);
     font-weight: 600;
+    background-color: transparent;
+    border: none;
 }
 
 
+.bottom-bar-btn:hover {
+    transform: scaleX(1.2);
+    color: black;
+    cursor: pointer;
+}
+
 .second-nav  {
     background: linear-gradient(336deg, rgba(71, 53, 186, 0.5), rgba(71, 61, 135, 0.7), rgba(58, 44, 152, 0.8));
-    border-radius: 4px;
+    
 } 
 
 
- /* .bottom-bar-btn:hover {
-    transform: scaleX(1.2);
-    color: black;
-} */
+ 
 
 
 .active {

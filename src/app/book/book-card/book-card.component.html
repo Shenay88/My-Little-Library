@@ -1,5 +1,5 @@
 <div class="book-list">
-  <div class="book" [routerLink]="['/books/book-details/', book.id]">
+  <div class="book" [routerLink]="['/books/book-details/', book.bookId]">
     <div class="book-img">
       <img [src]="book.imageURL" alt="{{ book.bookTitle }}" />
     </div>
@@ -17,7 +17,7 @@
           {{ book.ageTo }} years
         </p>
         <div class="like">
-          <i class="fa-solid fa-heart"></i><span>{{book.likes}}</span>
+          <i class="fa-solid fa-heart"></i><span>{{book.likesArr?.length}}</span>
         </div>
       </div>
     </div>

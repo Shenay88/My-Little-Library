@@ -2,25 +2,19 @@
   @if(loader) {
   <loader />
   }
-  <search-box />
 
-  @if(booksList.length > 0 || errorMessage === null || errorMessage === undefined || !loader) {
-    <!-- <app-sort-books (selectedBtn)="onClickFilterChanged($event)"></app-sort-books> -->
-  }
+    <search-box />
 
   <div class="books-list-container">
-    @if(booksList.length > 0 || errorMessage === null || errorMessage ===  undefined && !loader) 
-    { 
+    @if(booksList.length > 0 || errorMessage === null || errorMessage === undefined && !loader) { 
       @for(eachBook of booksList; track 'id') {
-    <!-- !Changes track eachBook.id-->
     <book-card [book]="eachBook" />
     } 
   } 
-  @if(booksList.length === 0 && !loader) {
+  @if((booksList.length === 0 || isEmpty )&& !loader) {
     <h1>No Books</h1>
     } 
-
-  @if(errorMessage) {
+    @if(errorMessage) {
     <snackbar [errorText]="errorMessage" />
     }
   </div>

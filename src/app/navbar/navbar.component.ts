@@ -1,20 +1,21 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../Services/User/user.service';
+import { SearchBoxComponent } from '../home/search-box/search-box.component';
 import { BottomNavComponent } from './bottom-nav/bottom-nav.component';
 
 @Component({
-  selector: 'navigation',
+  selector: 'navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, BottomNavComponent],
-  templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.css',
+  imports: [RouterLink, RouterLinkActive,SearchBoxComponent, BottomNavComponent],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css',
 })
-export class NavigationComponent {
-  isUser: boolean = false;
+export class NavbarComponent {
   userService = inject(UserService);
   router = inject(Router);
   name!: string | undefined;
+  isUser: boolean = false;
 
   @Input() user!: string;
 

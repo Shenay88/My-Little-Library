@@ -1,10 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject} from '@angular/core';
 import { Books } from '../../Model/Books';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, Subject, throwError } from 'rxjs';
-import { UserService } from '../User/user.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +24,10 @@ export class BooksService {
                 }
   * 2. Before to use it we need to transform it. First we need to convert it into array and in that array we will have objects. Each object will have our properties - bookTitle, authorName etc. Because "get" returns observable we can use rxjs to transform the data and also we will asign the ID (key) property. We can use it later.
   * 3. Map rxjs operator return an Observable.
-  * 4. We return the whole func because we don't want to subscribe here, because we need all books in the Book lists
+  * 4. We return the whole func because we don't want to subscribe here, because we need all books in the Book lists.
+  
+  ! DELETE !
+  * 1. The deleteBook method return Observable<void> to reflect that it doesn't emit any value upon successful deletion.
 
   ! CATCH ERRORS !
   * 1. errorSubject = new Subject<HttpErrorResponse>() - if there some errors we can use errorSubject to emitted this err. We can set subscribers in which component we needed. And these subscriber will receive this err object whenever some HTTP error will occur.
@@ -45,7 +46,6 @@ export class BooksService {
     'https://my-little-library-799e3-default-rtdb.firebaseio.com';
 
   http: HttpClient = inject(HttpClient);
-
   errorSubject = new Subject<HttpErrorResponse>();
 
   constructor() {}
@@ -53,32 +53,38 @@ export class BooksService {
   createBook(book: Books): Observable<any> {
     return this.http
       .post<{ name: string }>(`${this.baseUrl}/books.json`, book)
-      .pipe(
-        catchError((err) => {
-          this.errorSubject.next(err.error.message || 'An error occurred');
-          return throwError(() => console.log(err));
+      .pipe( 
+        catchError((err:HttpErrorResponse) => {
+          const errorMessage = err.error?.message || 'An error occurred'
+          this.errorSubject.next(errorMessage);
+          return throwError(() => {errorMessage});
         })
       );
   }
 
   deleteBook(bookId: string | undefined): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/books/${bookId}.json`);
+    return this.http.delete<void>(`${this.baseUrl}/books/${bookId}.json`);
   }
 
-  getAllBooks() {
+  getAllBooks():Observable<Books[]> {
     return this.http
       .get<{ [key: string]: Books }>(
         'https://my-little-library-799e3-default-rtdb.firebaseio.com/books.json'
       )
       .pipe(
         map((response) => {
-          let books: any[] = [];
+          const books: Books[] = [];
           for (let key in response) {
             if (response.hasOwnProperty(key)) {
-              books.push({ ...response[key], id: key });
+              books.push({ ...response[key], bookId: key });
             }
           }
           return books;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const errorMessage = err.error?.message || 'An error occurred';
+          this.errorSubject.next(errorMessage);
+          return throwError(() => errorMessage);
         })
       );
   }
@@ -91,12 +97,14 @@ export class BooksService {
     const url = `${this.baseUrl}/books/${bookId}.json`;
 
     return this.http.put<Books>(url, book).pipe(
-      catchError((error) => {
-        // Handle and forward the error
-        return throwError(() => {
-          console.log(error);
-        });
+      catchError((error: HttpErrorResponse) => {
+        const errorMessage = error.error?.message || 'An error occurred';
+        this.errorSubject.next(errorMessage);
+        return throwError(() => errorMessage);
       })
     );
   }
+
+
+
 }

@@ -1,10 +1,7 @@
-
-
-import { Component, OnInit, inject} from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BooksService } from '../Services/Books/books.service';
-import { UserService } from '../Services/User/user.service';
 
 import { Books } from '../Model/Books';
 import { BookCardComponent } from '../book/book-card/book-card.component';
@@ -12,37 +9,39 @@ import { LoaderComponent } from '../utility/loader/loader.component';
 import { SnackbarComponent } from '../utility/snackbar/snackbar.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 
-
-
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ BookCardComponent, LoaderComponent, SnackbarComponent,SearchBoxComponent,],
+  imports: [
+    BookCardComponent,
+    LoaderComponent,
+    SnackbarComponent,
+    SearchBoxComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   providers: [],
 })
-export class HomeComponent  implements OnInit{
+export class HomeComponent implements OnInit {
   bookService: BooksService = inject(BooksService);
   activeRoute: ActivatedRoute = inject(ActivatedRoute);
-  userService = inject(UserService);
-  router= inject(Router);
+  router = inject(Router);
 
   booksList: Books[] = [];
   searchValue: any;
   errorMessage: string | null = null;
   loader: boolean = true;
-  searchText: any;
+  isEmpty: boolean = false;
 
   ngOnInit() {
     this.activeRoute.queryParamMap.subscribe((param) => {
+     
       this.searchValue = param.get('search');
 
       this.bookService.getAllBooks().subscribe({
         next: (books: any) => {
           this.loader = false;
           
-
           if (
             this.searchValue === '' ||
             this.searchValue === undefined ||

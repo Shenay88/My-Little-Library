@@ -5,9 +5,6 @@
     align-items: center;
     min-height: 85vh;
     min-height: 85dvh;
-    /* background-size: cover;
-    background: url(../../../assets/5-books-every-kid-from-age-5-8-should-read.png) no-repeat;
-    background-position: center; */
 }
 
 .userForm {
@@ -62,7 +59,6 @@ h2 {
     color: #fff;
     font-size: 16px;
     padding: 0 35px 0 5px;
-    /* 35px -> to limit the input field to the right side and not go behind the icon*/
 }
 
 .input-box .icon {

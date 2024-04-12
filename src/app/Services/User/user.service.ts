@@ -16,6 +16,7 @@ import {
   providedIn: 'root',
 })
 export class UserService {
+  
   /* EXPLANATION
   ! MAIN
   * 1. user(this.firebaseAut) - returns us all user data. It is from Firebase
@@ -23,6 +24,7 @@ export class UserService {
   * 3. Firebase does not return Observable, it returns for us Promises. We return it in an Observable
   * 4. After creating the user we need to update and add username because firebase provide only email and password. That's why we use updateProfile()
   * 5. response.user - created user and we ad {displayname: username}. It return Promise void
+ 
   ! handleError()
   * 1. return - because we want to retun observable.
   * 2. When used in combination with the catchError operator, throwError allows you to handle errors within an observable stream and replace the errored observable with a new observable that emits a predefined error.

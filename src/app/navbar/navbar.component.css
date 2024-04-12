@@ -1,9 +1,10 @@
-.navigation {
+.navbar {
     background-color: #6a5fa6;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    /* margin-bottom: 5px; */
 }
 
 .header-nav {

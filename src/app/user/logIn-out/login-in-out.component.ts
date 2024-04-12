@@ -21,19 +21,18 @@ import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 /* EXPLANATION
 
  * 1. console.log(form) {[control->Object(email, password),dirty,disabled,enabled,errors,formDirective,invalid,path]}
- * 2. console.log(form.value) {email: 'shani@abv.bg', password: '12345678'}
- * 3. 
+ * 2. console.log(form.value) {email: 'shani@abv.bg', password: '12345678'} 
  */
 export class LoginInOutComponent {
   router: Router = inject(Router);
   userService: UserService = inject(UserService);
+  firebaseAut = inject(Auth);
 
   isLoginForm: boolean = true;
   isLoading = false;
 
   errorMessage: string | null = null;
 
-  firebaseAut = inject(Auth);
 
   constructor() {}
 

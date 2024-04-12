@@ -6,15 +6,10 @@ import { provideClientHydration } from '@angular/platform-browser';
 import {
   provideHttpClient,
   withFetch,
-  withInterceptors,
 } from '@angular/common/http';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD6Qkvor66wxiR2W86ESpgwfiARHLLOSB8',
@@ -35,10 +30,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       provideFirebaseApp(() => initializeApp(firebaseConfig)),
       provideAuth(() => getAuth()),
-      // AngularFirestoreModule,
-      // AngularFireStorageModule,
-      // AngularFireDatabaseModule,
-      // AngularFireModule
     ]),
   ],
 };

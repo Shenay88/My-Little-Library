@@ -78,6 +78,15 @@ h3 {
     transform: scale(1.1);
 }
 
+.user-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    margin-right: 15px;
+}
+
 .buttons-like-dislike {
     display: flex;
     justify-content: flex-end;

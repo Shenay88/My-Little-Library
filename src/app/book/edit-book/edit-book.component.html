@@ -1,14 +1,11 @@
+@if(isLoader) {
+<loader />
+}
 <section class="book-add-container">
-  @if(isLoader) {
-  <loader />
-  } 
-  
   @if(errMessage !== null && errMessage !== '' && errMessage !== undefined &&
   !isLoader && !selectedBook) {
   <snackbar [errorText]="errMessage" />
-  } 
-  
-  @if(selectedBook && !isLoader) {
+  } @if(selectedBook && !isLoader) {
   <header>Edit Book</header>
   <form
     class="book-form"
@@ -29,11 +26,9 @@
       <div class="error">
         @if(bookTitle.errors?.['required']) {<small
           >*Book title is required.</small
-        >} 
-        @if(bookTitle.errors?.['pattern']) {<small
+        >} @if(bookTitle.errors?.['pattern']) {<small
           >*Invalid format for book title.</small
-        >} 
-        @if(bookTitle.errors?.['minlength']) {<small
+        >} @if(bookTitle.errors?.['minlength']) {<small
           >*Book title must be at least 5 characters long.</small
         >}
       </div>
@@ -54,11 +49,9 @@
         <div class="error">
           @if(bookTitle.errors?.['required']) {<small
             >*Author name is required.</small
-          >} 
-          @if(authorName.errors?.['pattern']) {<small
+          >} @if(authorName.errors?.['pattern']) {<small
             >*Invalid format for author name.</small
-          >} 
-          @if(authorName.errors?.['minlength']) {<small
+          >} @if(authorName.errors?.['minlength']) {<small
             >*Author name must be at least 5 characters long.</small
           >}
         </div>
@@ -77,11 +70,9 @@
         <div class="error">
           @if(category.errors?.['required']) {<small
             >*Category is required.</small
-          >} 
-          @if(category.errors?.['pattern']) {<small
+          >} @if(category.errors?.['pattern']) {<small
             >*Invalid format for category.</small
-          >} 
-          @if(category.errors?.['minlength']) {<small
+          >} @if(category.errors?.['minlength']) {<small
             >*Category must be at least 4 characters long.</small
           >}
         </div>
@@ -101,8 +92,7 @@
       <div class="error">
         @if(imageURL.errors?.['required']) {<small
           >*image URL is required.</small
-        >} 
-        @if(imageURL.errors?.['pattern']) {<small
+        >} @if(imageURL.errors?.['pattern']) {<small
           >*Invalid format for URL.</small
         >}
       </div>
@@ -124,8 +114,7 @@
         <div class="error">
           @if(ageFrom.errors?.['required']) {<small
             >*Age From is required.</small
-          >} 
-          @if(ageFrom.errors?.['max'] || ageFrom.errors?.['min']) {<small
+          >} @if(ageFrom.errors?.['max'] || ageFrom.errors?.['min']) {<small
             >*Age must between 0 and 17.</small
           >}
         </div>
@@ -166,11 +155,9 @@
       <div class="error">
         @if(description.errors?.['required']) {<small
           >*Description is required.</small
-        >}
-        @if(description.errors?.['pattern']) {<small
+        >} @if(description.errors?.['pattern']) {<small
           >*Invalid format for description.</small
-        >} 
-        @if(description.errors?.['minlength']) {<small
+        >} @if(description.errors?.['minlength']) {<small
           >*Description must be at least 20 characters long.</small
         >}
       </div>

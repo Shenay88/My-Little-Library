@@ -10,16 +10,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './book-card.component.css',
 })
 export class BookCardComponent {
-  @Input() book: Books = {
-    bookTitle: '',
-    authorName: '',
-    category: '',
-    imageURL: '',
-    ageFrom: 0,
-    id: '',
-    ageTo: 0,
-    description: '',
-    ownerId: '',
-    createdAt: 0
-  };
+  @Input() book!: Books
 }

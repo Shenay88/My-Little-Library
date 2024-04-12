@@ -1,4 +1,4 @@
-<div class="navigation">
+<div class="navbar">
   <div class="logo">
     <a routerLink="home" class="logo-btn">My Little Library</a>
   </div>
@@ -40,7 +40,7 @@
         <div
           class="item"
           class="item"
-          routerLink="auth"
+          routerLink="login"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
         >
@@ -48,7 +48,10 @@
           <a>Login</a>
         </div>
         }
+        
       </div>
     </div>
+    <bottom-nav/>
   </div>
+
 </div>
