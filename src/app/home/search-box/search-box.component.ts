@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { SortBooksComponent } from '../../navbar/sort-books/sort-books.component';
+import { SortBooksComponent } from '../sort-books/sort-books.component';
 
 @Component({
   selector: 'search-box',

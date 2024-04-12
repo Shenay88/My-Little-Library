@@ -7,7 +7,7 @@ import { BookDetailsComponent } from './book/book-details/book-details.component
 import { EditBookComponent } from './book/edit-book/edit-book.component';
 import { LoginInOutComponent } from './user/logIn-out/login-in-out.component';
 import { authGuard } from './auth.guard';
-import { SortBooksComponent } from './navbar/sort-books/sort-books.component';
+import { SortBooksComponent } from './home/sort-books/sort-books.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', title: 'Home', pathMatch: 'full' },
