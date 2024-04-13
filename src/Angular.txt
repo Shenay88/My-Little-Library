@@ -443,3 +443,10 @@ To update the value of a signal, we need to call a method on the signal object -
 Difference between update() and mutate() 
 - mutate() method works just like update. The only difference is that you can use it only on mutable values - array, object.
 - update() method overrides the existing value and create a new value. It does not change the existing value. Not mutable values - number, string, boolean
+
+  "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
