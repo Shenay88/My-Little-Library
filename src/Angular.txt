@@ -259,7 +259,7 @@ useClass - we are specifying which class needs to be instantiated for that token
     - A promise will certainly return a data even if no code is using that data. Whereas an observable will return a data only if someone is going to use that data.
     - A promise is native to JS program. Whereas observable is not native to JS and it is ptovided by "RxJS" library.
 
-78. Observable pattern
+78. Observable pattern 
 
  Observable ----------------> Observer ----------------> handler
 Event Emmiter         Event Listener Subscriber       Event Handler

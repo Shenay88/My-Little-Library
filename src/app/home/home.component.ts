@@ -8,6 +8,7 @@ import { BookCardComponent } from '../book/book-card/book-card.component';
 import { LoaderComponent } from '../utility/loader/loader.component';
 import { SnackbarComponent } from '../utility/snackbar/snackbar.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { UserService } from '../Services/User/user.service';
 
 @Component({
   selector: 'app-home',

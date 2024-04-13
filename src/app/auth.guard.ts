@@ -25,17 +25,17 @@ export const authGuard: CanActivateFn = (
   }
 };
 
-export const loggedGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): boolean => {
-  const userService = inject(UserService);
-  const router = inject(Router);
+// export const loggedGuard: CanActivateFn = (
+//   route: ActivatedRouteSnapshot,
+//   state: RouterStateSnapshot
+// ): boolean => {
+//   const userService = inject(UserService);
+//   const router = inject(Router);
 
-  if (userService.currentUserSignal() !== null) {
-    router.navigate(['/404']);
-    return false;
-  } else {
-    return true;
-  }
-};
+//   if (userService.currentUserSignal() !== null) {
+//     router.navigate(['/404']);
+//     return false;
+//   } else {
+//     return true;
+//   }
+// };
