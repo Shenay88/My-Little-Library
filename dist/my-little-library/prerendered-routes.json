@@ -1,0 +1,9 @@
+{
+  "routes": [
+    "/add-book",
+    "/home",
+    "/login",
+    "/my-books",
+    "/sort-books"
+  ]
+}
