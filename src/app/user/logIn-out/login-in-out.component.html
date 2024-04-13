@@ -72,9 +72,10 @@
       @if(password.invalid && (password.dirty || password.touched)){
       <div class="error-log">
         @if(password.errors?.['required']) {<small>*Password is required.</small
-        >} @if(password.errors?.['pattern'] || email.errors?.['email']) {<small
+        >} @if(password.errors?.['pattern'] || email.errors?.['minlength']) {<small
           >*Password must be at least 8 characters long.</small
-        >}
+        >} 
+        
       </div>
       }
       <button class="sub-btn" type="submit" [disabled]="userForm.invalid">
