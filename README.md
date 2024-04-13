@@ -42,7 +42,7 @@ Routes
 
 Deployment
 
-This project is deployed on Firebase and can be accessed at https://my-little-library-799e3.web.app/home
+This project is deployed on Firebase and can be accessed at https://my-little-library-799e3.web.app/home , https://shenay88.github.io/My-Little-Library/home
 
 Repository
 The source code for this project can be found on GitHub: https://github.com/Shenay88/My-Little-Library.git
