@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'My-Little-Library';
 
   userService = inject(UserService);
-  user: any
+  user!: string;
 
   ngOnInit(): void {
     this.userService.user$.subscribe(user => {
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
           email: user.email!,
           username: user.displayName!,
         });
-        this.user = user.displayName
+        this.user = user.displayName!
        
       } else {
         this.userService.currentUserSignal.set(null);

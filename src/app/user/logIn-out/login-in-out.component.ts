@@ -67,6 +67,7 @@ export class LoginInOutComponent {
       const username: string = form.value.username;
       this.userService.signUp(email, username, password).subscribe({
         next: () => {
+          // this.userService.currentUserSignal.set(email)
           this.router.navigateByUrl('/');
         },
         error: (err) => {

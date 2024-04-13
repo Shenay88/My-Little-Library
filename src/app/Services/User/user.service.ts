@@ -41,7 +41,7 @@ export class UserService {
       this.firebaseAut,
       email,
       password
-    ).then(response => updateProfile(response.user, {displayName: username}));
+    ).then(response => updateProfile(response.user, {displayName: username}).then());
     return from(promise);
   }
 
