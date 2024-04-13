@@ -41,6 +41,7 @@
         #likeButton
         name="like"
         (click)="handleButtonClick(likeButton.name)"
+        [disabled] = 'isClicked'
       >
         <i class="fa-solid fa-thumbs-up"></i><span>{{likesCount}}</span>
       </button>
@@ -49,11 +50,13 @@
         #dislikeButton
         name="dislike"
         (click)="handleButtonClick(dislikeButton.name)"
+        [disabled] = 'isClicked'
       >
         <i class="fa-solid fa-thumbs-down"></i><span>{{dislikesCount}}</span>
       </button>
     </div>
-    } @if(this.userService.currentUserSignal()?.email &&
+    }
+     @if(this.userService.currentUserSignal()?.email &&
     (this.userService.currentUserSignal()?.email=== selectedBook.ownerId)) {
     <div class="action-buttons">
       <a [routerLink]="['/books/book/', bookId]" class="edit-btn">Edit</a>
